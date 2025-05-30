@@ -1,14 +1,12 @@
-//import { useState } from 'react'
+import { AuthProvider } from "./context/Authcontext";
+import AppRouter from "./AppRouter";
 
 function App() {
-
   return (
-    <>
-      <h1 className="text-8xl font-bold underline">
-        Hello world!
-      </h1>
-    </>
-  )
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
