@@ -3,6 +3,7 @@ import AppRouter from "./AppRouter";
 
 function App() {
   return (
+    
     <AuthProvider>
       <AppRouter />
     </AuthProvider>
