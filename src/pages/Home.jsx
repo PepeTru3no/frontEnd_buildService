@@ -1,7 +1,179 @@
-function Home (){
-    return(
-    <h1>Home</h1>
-    )
+import { useNavigate } from 'react-router-dom';
+import fondoPrincipal from '../assets/imgs/Fondo-principal.jpg';
+
+function Home() {
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <div
+        style={{
+          backgroundImage: `url(${fondoPrincipal})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '60vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          position: 'relative',
+          textAlign: 'center',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            padding: '2rem',
+            borderRadius: '10px',
+          }}
+        >
+          <h1 style={{ marginBottom: '1rem' }}>¡Regístrate con nosotros!</h1>
+          <button
+            onClick={() => navigate('/register')}
+            style={{
+              padding: '0.5rem 1rem',
+              fontSize: '1rem',
+              backgroundColor: '#0e2e3c',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Regístrate ahora
+          </button>
+        </div>
+      </div>
+
+      <div style={{ 
+        padding: '2rem', 
+        textAlign: 'center' 
+        }}>
+        <h1>¿Cómo Funciona?</h1>
+        <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-around', 
+            flexWrap: 'wrap', 
+            marginTop: '1.5rem' 
+            }}>
+          {[
+            { src: 'src/assets/imgs/Busca-servicio.png', 
+              texto: 'Busca un servicio' 
+             },
+            { src: 'src/assets/imgs/Encuentra-profesionales.png', 
+              texto: 'Encuentra profesionales' 
+             },
+            { src: 'src/assets/imgs/Contacta-favorito.png', 
+              texto: 'Contacta a tu favorito' 
+             },
+            { src: 'src/assets/imgs/Disfruta-servicio.png', 
+              texto: 'Disfruta del servicio' 
+             },
+          ].map((item, index) => (
+            <div key={index} style={{ 
+                width: '200px', 
+                margin: '1rem' 
+                }}>
+              <img src={item.src} alt={item.texto} style={{ width: '100%' }} />
+              <p style={{ marginTop: '0.5rem' }}>{item.texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <h1>Categorías destacadas</h1>
+        <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-around', 
+            flexWrap: 'wrap', 
+            marginTop: '1.5rem' 
+            }}>
+          {[
+            { src: 'src/assets/imgs/Fontaneria.png', 
+              texto: 'Fontanería' 
+              },
+            { src: 'src/assets/imgs/Electricidad.png', 
+              texto: 'Electricidad' 
+              },
+            { src: 'src/assets/imgs/Limpieza.png', 
+              texto: 'Limpieza' 
+              },
+            { src: 'src/assets/imgs/Construcción.png', 
+              texto: 'Construcción y montaje' 
+              },
+          ].map((item, index) => (
+            <div key={index} 
+                style={{ 
+                    width: '200px', 
+                    margin: '1rem' 
+                    }}>
+              <img 
+              src={item.src} 
+              alt={item.texto} 
+              style={{ width: '100%' }} />
+              <p 
+              style={{ margin: '0.5rem 0' }}>
+              {item.texto}
+              </p>
+              <button 
+              style={{ 
+                backgroundColor: '#0e2e3c', 
+                color: 'white', 
+                border: 'none', 
+                padding: '0.5rem 1rem', 
+                borderRadius: '5px' 
+                }}>
+                Ver más
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ 
+        padding: '2rem', 
+        textAlign: 'center' }}>
+        <h1>¿Qué dicen nuestros clientes?</h1>
+        <div style={{ 
+            display: 'flex', 
+            flexWrap: 'wrap', 
+            justifyContent: 'center', 
+            gap: '1rem', 
+            marginTop: '1.5rem' }}>
+          {[
+            { nombre: 'Nombre1', 
+              texto: 'Texto1' 
+              },
+            { nombre: 'Nombre2', 
+              texto: 'Texto2' 
+              },
+            { nombre: 'Nombre3', 
+              texto: 'Texto3' 
+              },
+            { nombre: 'Nombre4', 
+              texto: 'Texto4' 
+              },
+            { nombre: 'Nombre5', 
+              texto: 'Texto5' 
+              },
+            { nombre: 'Nombre6', 
+              texto: 'Texto6' 
+              },
+          ].map((item, index) => (
+            <div key={index} style={{ 
+                width: '250px', 
+                border: '1px solid #ccc', 
+                borderRadius: '10px', 
+                padding: '1rem' }}>
+              <h4>{item.nombre}</h4>
+              <p>{item.texto}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Home;

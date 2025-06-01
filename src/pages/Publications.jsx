@@ -11,7 +11,7 @@ const cardsData = [
 
 function Publications() {
   return (
-    <div style={{height: '100vh'}}>
+    <div style={{height: '100vh',}}>
         <h1 style={{display: 'flex', 
             justifyContent: 'center', 
             marginTop: '2rem',
