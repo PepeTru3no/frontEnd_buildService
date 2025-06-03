@@ -1,18 +1,22 @@
+import axios from 'axios';
 import fondo from '../assets/imgs/Fondo-register.webp';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 function  Register(){
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    edad: '',
+    name: '',
+    last_name: '',
+    age: '',
     email: '',
-    telefono: '',
+    phone: '',
     password: '',
     confirmarPassword: '',
   });
+
+  const navigate= useNavigate();
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -28,6 +32,14 @@ function  Register(){
       alert('Las contraseñas no coinciden');
       return;
     }
+    axios.post('http://localhost:3000/users',formData)
+    .then( (response) =>{
+      console.log(response);
+      navigate('/login');
+    })
+    .catch((error)=> {
+      console.log(error);
+    })
 
     console.log('Datos enviados:', formData);
   };
@@ -56,38 +68,38 @@ function  Register(){
         <h2 className="text-center mb-4" style={{color: "white"}}>Registrarse</h2>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="text" name="nombre" placeholder="Nombres" 
-              value={formData.nombre}
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Control type="text" name="name" placeholder="Nombre" 
+              value={formData.name}
               onChange={handleChange}
               required
           />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="text" name="apellido" placeholder="Apellidos" 
-              value={formData.apellido}
+            <Form.Control type="text" name="last_name" placeholder="Apellidos" 
+              value={formData.last_name}
               onChange={handleChange}
               required
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="number" name="edad" placeholder="Edad" 
-            value={formData.edad}
+            <Form.Control type="number" name="age" placeholder="Edad" 
+            value={formData.age}
               onChange={handleChange}
               required/>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="text" name="telefono" placeholder="Telefono" 
-            value={formData.telefono}
+            <Form.Control type="text" name="phone" placeholder="Telefono" 
+            value={formData.phone}
               onChange={handleChange}
               required
               />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control type="text" name="email" placeholder="Correo electronico" 
             value={formData.email}
               onChange={handleChange}

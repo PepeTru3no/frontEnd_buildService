@@ -7,13 +7,14 @@ function Servicios() {
   useEffect(() => {
     // API
     axios
-      .get("AQUI VA LA API")
+      .get("http://localhost:3000/services")
       .then((response) => {
         setServicios(response.data.slice(0, 5));
       })
       .catch((error) => {
         console.error("Error al cargar servicios:", error);
       });
+
   }, []);
 
   return (
@@ -21,8 +22,8 @@ function Servicios() {
       <h1 className="text-xl font-bold mb-4">Servicios Disponibles</h1>
       {servicios.map((servicio) => (
         <div key={servicio.id} className="border p-2 mb-2 rounded">
-          <h2 className="font-semibold">{servicio.title}</h2>
-          <p>{servicio.body}</p>
+          <h2 className="font-semibold">{servicio.name}</h2>
+          <p>{servicio.description}</p>
         </div>
       ))}
     </div>
