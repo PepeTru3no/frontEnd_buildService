@@ -40,8 +40,6 @@ function  Register(){
     .catch((error)=> {
       console.log(error);
     })
-
-    console.log('Datos enviados:', formData);
   };
     return (
     <div className='fondo-login'

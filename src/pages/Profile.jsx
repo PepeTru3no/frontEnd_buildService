@@ -3,12 +3,13 @@ import { AuthContext } from "../context/Authcontext";
 
 function Profile() {
   const { usuario, setUsuario } = useContext(AuthContext);
-
+  const token = localStorage.getItem('token');
+  console.log(token);
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold">Perfil del Usuario</h1>
-      {usuario ? (
-        <p>Bienvenido, {usuario.nombre}</p>
+      {usuario && token ? (
+        <p>Bienvenido, {usuario[0].name}</p>
       ) : (
         <button
           onClick={() =>

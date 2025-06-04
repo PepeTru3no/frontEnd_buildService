@@ -10,6 +10,7 @@ import Servicios from "./pages/Servicios";
 import Profile from "./pages/Profile";
 
 function AppRouter() {
+  //const token = localStorage.getItem('token');
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +22,6 @@ function AppRouter() {
           <Route path="publications" element={<Publications />} />
           <Route path="register" element={<Register />} />
           <Route path="servicios" element={<Servicios />} />
-          <Route path="perfil" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

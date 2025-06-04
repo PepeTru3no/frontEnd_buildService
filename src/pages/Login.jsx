@@ -1,8 +1,42 @@
+import axios from 'axios';
 import fondo from '../assets/imgs/Fondo-login.jpg';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/Authcontext';
 
 function Login() {
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const {setUsuario}=useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3000/users/login', formData)
+      .then(({data}) => {
+        setUsuario([data.user]);
+        localStorage.setItem('token', data.token)
+        navigate('/profile');
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  };
+
   return (
     <div className='fondo-login'
       style={{
@@ -27,13 +61,19 @@ function Login() {
       >
         <h2 className="text-center mb-4">Inicio de Sesión</h2>
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="email" placeholder="Escribe tu correo" />
+            <Form.Control type="email" name='email' placeholder="Escribe tu correo"
+              value={formData.email}
+              onChange={handleChange}
+              required />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="password" placeholder="Contraseña" />
+            <Form.Control type="password" name='password' placeholder="Contraseña"
+              value={formData.password}
+              onChange={handleChange}
+              required />
           </Form.Group>
 
           <div className="d-flex justify-content-center">
