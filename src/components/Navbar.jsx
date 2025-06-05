@@ -51,11 +51,13 @@ function navbar() {
                   Perfil
                 </Button>
                 <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
+                <Nav.Link as={Link} to="/interaction">Comentarios</Nav.Link>
               </div>
 
               <div className="d-lg-none w-100">
                 <Nav.Link as={Link} to="/profile">Perfil</Nav.Link >
                 <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
+                <Nav.Link as={Link} to="/interaction">Comentarios</Nav.Link>
               </div>
             </Nav>
           }

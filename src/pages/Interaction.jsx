@@ -1,22 +1,58 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import fondo from '../assets/imgs/Fondo-interaction.webp';
 import perfil from '../assets/imgs/Perfil.png';
+import { AuthContext } from '../context/Authcontext';
+import axios from 'axios';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
+  const [service, setService] = useState();
+  const [isLoad, setIsLoad] = useState(false);
+  const { usuario } = useContext(AuthContext);
+  useEffect(() => {
+    axios.get('http://localhost:3000/services/2')
+      .then(({ data }) => {
+        setService(data);
+        setComentarios(data.comments);
+        setIsLoad(true);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     if (comentario.trim() !== '') {
-      setComentarios([...comentarios, comentario]);
+      const data = {
+        comment: comentario,
+        user_id: usuario[0].id,
+        service_id: service.id
+      }
+      const Authorization = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios.post('http://localhost:3000/comments',
+        data,
+        Authorization
+      )
+        .then(({ data }) => {
+          setComentarios([...comentarios, data]);
+        })
+        .catch(err => console.log(err));
+      
       setComentario('');
     }
-  };
+  }
 
   return (
     <div
@@ -37,55 +73,80 @@ function Interaction() {
           <Card.Img variant="top" src={perfil} />
           <Card.Body />
           <ListGroup className="list-group-flush">
-            <ListGroup.Item>nombre</ListGroup.Item>
-            <ListGroup.Item>telefono</ListGroup.Item>
-            <ListGroup.Item>email</ListGroup.Item>
+            {usuario ?
+              <>
+                <ListGroup.Item>{`${usuario[0].name} ${usuario[0].last_name}`}</ListGroup.Item>
+                <ListGroup.Item>{usuario[0].phone}</ListGroup.Item>
+                <ListGroup.Item>{usuario[0].email}</ListGroup.Item>
+              </>
+              :
+              <>
+                <ListGroup.Item>john doe</ListGroup.Item>
+                <ListGroup.Item>555555555</ListGroup.Item>
+                <ListGroup.Item>john.doe@unmail.com</ListGroup.Item>
+              </>
+            }
+
           </ListGroup>
         </Card>
       </div>
-      <div
-        style={{
-          backgroundColor: 'white',
-          opacity: 0.95,
-          padding: '2rem',
-          borderRadius: '15px',
-          maxWidth: '400px',
-          width: '100%',
-        }}
-      >
-        <div className="mb-4">
-          <Form onSubmit={handleSubmit}>
-            <p>
-              Aquí va la descripción del servicio que se quiere mostrar. Como por
-              ejemplo: Construcción, jardinería, plomería, etc.
-            </p>
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="Escribe un comentario"
-                value={comentario}
-                onChange={(e) => setComentario(e.target.value)}/>
-            </Form.Group>
-
-            <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit" style={{backgroundColor:"#0e2e3c", border:"#0e2e3c"}}>
-                Comentar
-              </Button>
-            </div>
-          </Form>
+      {!isLoad ?
+        <div
+          style={{
+            backgroundColor: 'white',
+            opacity: 0.95,
+            padding: '2rem',
+            borderRadius: '15px',
+            maxWidth: '400px',
+            width: '100%',
+          }}
+        >
+          Cargando Servicio...
         </div>
+        : <div
+          style={{
+            backgroundColor: 'white',
+            opacity: 0.95,
+            padding: '2rem',
+            borderRadius: '15px',
+            maxWidth: '400px',
+            width: '100%',
+          }}
+        >
+          <div className="mb-4">
+            <Form onSubmit={handleSubmit}>
+              <p>{service.name}</p>
+              <p>
+                {service.description}
+              </p>
 
-        {comentarios.length > 0 && (
-          <div className="mt-4">
-            <h5>Comentarios:</h5>
-            <ul>
-              {comentarios.map((c, index) => (
-                <li key={index}>{c}</li>
-              ))}
-            </ul>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="textarea"
+                  placeholder="Escribe un comentario"
+                  value={comentario}
+                  onChange={(e) => setComentario(e.target.value)} />
+              </Form.Group>
+
+              <div className="d-flex justify-content-center">
+                <Button variant="primary" type="submit" style={{ backgroundColor: "#0e2e3c", border: "#0e2e3c" }}>
+                  Comentar
+                </Button>
+              </div>
+            </Form>
           </div>
-        )}
-      </div>
+
+          {comentarios.length > 0 && (
+            <div className="mt-4">
+              <h5>Comentarios:</h5>
+              <ul>
+                {comentarios.map((c) => (
+                  <li key={c.id}>{c.comment}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>}
     </div>
   );
 }

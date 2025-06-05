@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/Authcontext';
 
-function Login() {
+function Login() {/* 
+  const token= localStorage.getItem('token');
+  if(token)localStorage.clear; */
 
   const [formData, setFormData] = useState({
     email: '',
