@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/Authcontext";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from "react-router-dom";
 
 function Servicios() {
   const [servicios, setServicios] = useState([]);
@@ -17,7 +18,7 @@ function Servicios() {
     // API
     axios
       .get("http://localhost:3000/services")
-      .then(({data}) => {
+      .then(({ data }) => {
         setServicios(data.slice(0, 5));
       })
       .catch((error) => {
@@ -54,10 +55,10 @@ function Servicios() {
       })
       .catch((error) => {
         console.log(error);
-      })      
+      })
   };
 
-  const saveImage=(id)=>{
+  const saveImage = (id) => {
     const formData = new FormData();
     for (let i = 0; i < file.length; i++) {
       formData.append("file", file[i]);
@@ -83,13 +84,18 @@ function Servicios() {
           <h2 className="font-semibold">{servicio.name}</h2>
           <p>{servicio.description}</p>
           {servicio.images.map((file, index) => (
-          <img 
-            key={index} 
-            src={`http://localhost:3000/uploads/${file.sample_image}`} 
-            alt={file.sample_image} 
-            width="100" 
-          />
-        ))}
+            <img
+              key={index}
+              src={`http://localhost:3000/uploads/${file.sample_image}`}
+              alt={file.sample_image}
+              width="100"
+            />
+          ))}
+          <div className="d-flex justify-content-center">
+            <Button as={Link} to={`/interaction/${servicio.id}`} variant="primary" className="me-2">
+              Comentar
+            </Button>
+          </div>
         </div>
       ))}
       <hr />

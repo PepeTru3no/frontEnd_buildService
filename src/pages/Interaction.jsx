@@ -7,6 +7,7 @@ import fondo from '../assets/imgs/Fondo-interaction.webp';
 import perfil from '../assets/imgs/Perfil.png';
 import { AuthContext } from '../context/Authcontext';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
@@ -14,8 +15,10 @@ function Interaction() {
   const [service, setService] = useState();
   const [isLoad, setIsLoad] = useState(false);
   const { usuario } = useContext(AuthContext);
+  const { id } = useParams();
+  const token = localStorage.getItem('token');
   useEffect(() => {
-    axios.get('http://localhost:3000/services/2')
+    axios.get(`http://localhost:3000/services/${id}`)
       .then(({ data }) => {
         setService(data);
         setComentarios(data.comments);
@@ -29,7 +32,6 @@ function Interaction() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
     if (comentario.trim() !== '') {
       const data = {
         comment: comentario,
@@ -49,7 +51,7 @@ function Interaction() {
           setComentarios([...comentarios, data]);
         })
         .catch(err => console.log(err));
-      
+
       setComentario('');
     }
   }
@@ -73,7 +75,7 @@ function Interaction() {
           <Card.Img variant="top" src={perfil} />
           <Card.Body />
           <ListGroup className="list-group-flush">
-            {usuario ?
+            {usuario && token ?
               <>
                 <ListGroup.Item>{`${usuario[0].name} ${usuario[0].last_name}`}</ListGroup.Item>
                 <ListGroup.Item>{usuario[0].phone}</ListGroup.Item>
@@ -81,9 +83,7 @@ function Interaction() {
               </>
               :
               <>
-                <ListGroup.Item>john doe</ListGroup.Item>
-                <ListGroup.Item>555555555</ListGroup.Item>
-                <ListGroup.Item>john.doe@unmail.com</ListGroup.Item>
+                <ListGroup.Item>Invitado</ListGroup.Item>
               </>
             }
 
@@ -119,20 +119,26 @@ function Interaction() {
               <p>
                 {service.description}
               </p>
+              {token && usuario ?
+                <>
+                  <Form.Group className="mb-3">
+                    <Form.Control
+                      type="textarea"
+                      placeholder="Escribe un comentario"
+                      value={comentario}
+                      onChange={(e) => setComentario(e.target.value)} />
+                  </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="textarea"
-                  placeholder="Escribe un comentario"
-                  value={comentario}
-                  onChange={(e) => setComentario(e.target.value)} />
-              </Form.Group>
+                  <div className="d-flex justify-content-center">
+                    <Button variant="primary" type="submit" style={{ backgroundColor: "#0e2e3c", border: "#0e2e3c" }}>
+                      Comentar
+                    </Button>
+                  </div>
+                </>
+                :
+                ""
+              }
 
-              <div className="d-flex justify-content-center">
-                <Button variant="primary" type="submit" style={{ backgroundColor: "#0e2e3c", border: "#0e2e3c" }}>
-                  Comentar
-                </Button>
-              </div>
             </Form>
           </div>
 

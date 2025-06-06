@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/Authcontext';
+import { TokenContext } from '../context/TokenContext';
 
 function Login() {/* 
   const token= localStorage.getItem('token');
@@ -16,6 +17,7 @@ function Login() {/*
   });
 
   const {setUsuario}=useContext(AuthContext);
+  const {setToken}= useContext(TokenContext);
 
   const navigate = useNavigate();
 
@@ -32,7 +34,8 @@ function Login() {/*
       .then(({data}) => {
         setUsuario([data.user]);
         localStorage.setItem('token', data.token)
-        navigate('/profile');
+        setToken(data.token);
+        navigate('/publications');
       })
       .catch((error) => {
         console.log(error);

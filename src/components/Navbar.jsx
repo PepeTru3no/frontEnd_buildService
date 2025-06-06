@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Navbar, Container, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { TokenContext } from "../context/TokenContext";
 
 function navbar() {
-  const token = localStorage.getItem('token');
+  const {token} = useContext(TokenContext);
   return (
     <Navbar bg="light" expand="lg" className="px-3">
       <Container fluid>
@@ -37,11 +39,13 @@ function navbar() {
                   Registrarse
                 </Button>
                 <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+                <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
               </div>
 
               <div className="d-lg-none w-100">
                 <Nav.Link as={Link} to="/register">Registrarse</Nav.Link >
                 <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
+                <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
               </div>
             </Nav>
             :
@@ -50,14 +54,14 @@ function navbar() {
                 <Button as={Link} to="/profile" variant="primary" className="me-2">
                   Perfil
                 </Button>
-                <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
-                <Nav.Link as={Link} to="/interaction">Comentarios</Nav.Link>
+                <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
+                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
               </div>
 
               <div className="d-lg-none w-100">
                 <Nav.Link as={Link} to="/profile">Perfil</Nav.Link >
-                <Nav.Link as={Link} to="/servicios">Servicios</Nav.Link>
-                <Nav.Link as={Link} to="/interaction">Comentarios</Nav.Link>
+                <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
+                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
               </div>
             </Nav>
           }

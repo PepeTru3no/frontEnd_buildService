@@ -1,12 +1,14 @@
 import { AuthProvider } from "./context/Authcontext";
 import AppRouter from "./AppRouter";
+import { TokenProvider } from "./context/TokenContext";
 
 function App() {
   return (
-    
-    <AuthProvider>
-      <AppRouter />
-    </AuthProvider>
+    <TokenProvider>
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
+    </TokenProvider>
   );
 }
 

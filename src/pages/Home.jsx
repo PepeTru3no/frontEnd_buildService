@@ -1,8 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import fondoPrincipal from '../assets/imgs/Fondo-principal.jpg';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Home() {
   const navigate = useNavigate();
+  const token= localStorage.getItem('token');
+  const [comments, setComments]= useState();
+  const [isLoad, setIsLoad]= useState(false);
+
+  useEffect(()=>{
+      axios.get('http://localhost:3000/comments?limit=6')
+      .then(({data})=>{
+        console.log(data);
+        setComments(data);
+        setIsLoad(true);
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+  },[])
 
   return (
     <div>
@@ -20,6 +37,7 @@ function Home() {
           textAlign: 'center',
         }}
       >
+        {!token?
         <div
           style={{
             backgroundColor: 'rgba(0,0,0,0.6)',
@@ -43,6 +61,31 @@ function Home() {
             Regístrate ahora
           </button>
         </div>
+        :
+        <div
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            padding: '2rem',
+            borderRadius: '10px',
+          }}
+        >
+          <h1 style={{ marginBottom: '1rem' }}>¡Navega por nuestros servicios!</h1>
+          <button
+            onClick={() => navigate('/publications')}
+            style={{
+              padding: '0.5rem 1rem',
+              fontSize: '1rem',
+              backgroundColor: '#0e2e3c',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Publicaciones
+          </button>
+        </div>
+        }
       </div>
 
       <div style={{ 
@@ -135,42 +178,46 @@ function Home() {
         padding: '2rem', 
         textAlign: 'center' }}>
         <h1>¿Qué dicen nuestros clientes?</h1>
+        {isLoad?
         <div style={{ 
-            display: 'flex', 
-            flexWrap: 'wrap', 
-            justifyContent: 'center', 
-            gap: '1rem', 
-            marginTop: '1.5rem' }}>
-          {[
-            { nombre: 'Nombre1', 
-              texto: 'Texto1' 
-              },
-            { nombre: 'Nombre2', 
-              texto: 'Texto2' 
-              },
-            { nombre: 'Nombre3', 
-              texto: 'Texto3' 
-              },
-            { nombre: 'Nombre4', 
-              texto: 'Texto4' 
-              },
-            { nombre: 'Nombre5', 
-              texto: 'Texto5' 
-              },
-            { nombre: 'Nombre6', 
-              texto: 'Texto6' 
-              },
-          ].map((item, index) => (
-            <div key={index} style={{ 
-                width: '250px', 
-                border: '1px solid #ccc', 
-                borderRadius: '10px', 
-                padding: '1rem' }}>
-              <h4>{item.nombre}</h4>
-              <p>{item.texto}</p>
-            </div>
-          ))}
-        </div>
+          display: 'flex', 
+          flexWrap: 'wrap', 
+          justifyContent: 'center', 
+          gap: '1rem', 
+          marginTop: '1.5rem' }}>
+        {/* [
+          { nombre: 'Nombre1', 
+            texto: 'Texto1' 
+            },
+          { nombre: 'Nombre2', 
+            texto: 'Texto2' 
+            },
+          { nombre: 'Nombre3', 
+            texto: 'Texto3' 
+            },
+          { nombre: 'Nombre4', 
+            texto: 'Texto4' 
+            },
+          { nombre: 'Nombre5', 
+            texto: 'Texto5' 
+            },
+          { nombre: 'Nombre6', 
+            texto: 'Texto6' 
+            },
+        ] */comments.map((item, index) => (
+          <div key={index} style={{ 
+              width: '250px', 
+              border: '1px solid #ccc', 
+              borderRadius: '10px', 
+              padding: '1rem' }}>
+            {/* <h4>{item.name}</h4> */}
+            <p>{item.comment}</p>
+          </div>
+        ))}
+      </div>
+        :
+        <h1>Cargando Comentarios...</h1>
+        }
       </div>
     </div>
   );
