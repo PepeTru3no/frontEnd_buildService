@@ -1,28 +1,29 @@
-import axios from 'axios';
-import fondo from '../assets/imgs/Fondo-login.jpg';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/Authcontext';
-import { TokenContext } from '../context/TokenContext';
+import axios from "axios";
+import fondo from "../assets/imgs/Fondo-login.jpg";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/Authcontext";
+import { TokenContext } from "../context/TokenContext";
 
-function Login() {/* 
+function Login() {
+  /* 
   const token= localStorage.getItem('token');
   if(token)localStorage.clear; */
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
-  const {setUsuario}=useContext(AuthContext);
-  const {setToken}= useContext(TokenContext);
+  const { setUsuario } = useContext(AuthContext);
+  const { setToken } = useContext(TokenContext);
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -30,55 +31,67 @@ function Login() {/*
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/users/login', formData)
-      .then(({data}) => {
-        setUsuario([data.user]);
-        localStorage.setItem('token', data.token)
-        setToken(data.token);
-        navigate('/publications');
+
+    axios
+      .post("http://localhost:3000/users/login", formData)
+      .then(({ data }) => {
+        setUsuario(data.user); // ✅ guardamos como objeto
+        localStorage.setItem("token", data.token); // ✅ persistimos el token
+        setToken(data.token); // ✅ actualizamos el contexto
+        navigate("/publications"); // ✅ redirige a otra ruta (perfil o publicaciones)
       })
       .catch((error) => {
-        console.log(error);
-      })
+        console.error(error);
+        alert("Correo o contraseña incorrectos");
+      });
   };
 
   return (
-    <div className='fondo-login'
+    <div
+      className="fondo-login"
       style={{
         backgroundImage: `url(${fondo})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div
         style={{
-          backgroundColor: 'white',
+          backgroundColor: "white",
           opacity: 0.9,
-          padding: '2rem',
-          borderRadius: '15px',
-          maxWidth: '400px',
-          width: '100%',
+          padding: "2rem",
+          borderRadius: "15px",
+          maxWidth: "400px",
+          width: "100%",
         }}
       >
         <h2 className="text-center mb-4">Inicio de Sesión</h2>
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="email" name='email' placeholder="Escribe tu correo"
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Escribe tu correo"
               value={formData.email}
               onChange={handleChange}
-              required />
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="password" name='password' placeholder="Contraseña"
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Contraseña"
               value={formData.password}
               onChange={handleChange}
-              required />
+              required
+            />
           </Form.Group>
 
           <div className="d-flex justify-content-center">
