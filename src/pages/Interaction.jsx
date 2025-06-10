@@ -5,15 +5,17 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import fondo from '../assets/imgs/Fondo-interaction.webp';
 import perfil from '../assets/imgs/Perfil.png';
-import { AuthContext } from '../context/Authcontext';
+import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import ReactStars from 'react-stars';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
   const [service, setService] = useState();
   const [isLoad, setIsLoad] = useState(false);
+  const [stars, setStars] = useState(); 
   const { usuario } = useContext(AuthContext);
   const { id } = useParams();
   const token = localStorage.getItem('token');
@@ -22,12 +24,13 @@ function Interaction() {
       .then(({ data }) => {
         setService(data);
         setComentarios(data.comments);
+        setStars(data.stars);
         setIsLoad(true);
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [stars]);
 
 
   const handleSubmit = (e) => {
@@ -54,6 +57,24 @@ function Interaction() {
 
       setComentario('');
     }
+  }
+
+  const handleChangeStars = (e) => {
+    const data = {
+      stars: Number(stars),
+      newStars: e
+    }
+    console.log(data);
+    axios.put(`http://localhost:3000/services/${id}`, data)
+      .then(({ status, data }) => {
+        if (status == 200) {
+          alert(`Gracias por calificar nuestro sercicio de :\n${service.name.toUpperCase()}`);
+          setStars(data.stars);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cargar servicios:", error);
+      });
   }
 
   return (
@@ -116,11 +137,22 @@ function Interaction() {
           <div className="mb-4">
             <Form onSubmit={handleSubmit}>
               <p>{service.name}</p>
+              <p><ReactStars
+                count={5}
+                value={service.stars}
+                size={12}
+                color2={'#ffd700'} /></p>
               <p>
                 {service.description}
               </p>
               {token && usuario ?
                 <>
+                  Calificar Servicio:
+                  <ReactStars
+                    count={5}
+                    onChange={handleChangeStars}
+                    size={24}
+                    color2={'#ffd700'} />
                   <Form.Group className="mb-3">
                     <Form.Control
                       type="textarea"

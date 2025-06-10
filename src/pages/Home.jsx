@@ -12,7 +12,6 @@ function Home() {
   useEffect(()=>{
       axios.get('http://localhost:3000/comments?limit=6')
       .then(({data})=>{
-        console.log(data);
         setComments(data);
         setIsLoad(true);
       })

@@ -14,7 +14,6 @@ function Publications() {
     axios
       .get(`http://localhost:3000/services${queryParams}`)
       .then(({ data }) => {
-        console.log(data);
         setServicios(data.response);
         setCount(data.count);
         setIsLoad(true);
@@ -23,6 +22,7 @@ function Publications() {
         console.error("Error al cargar servicios:", error);
       });
   }, [page]);
+
   return (
     <div style={{ height: '100vh', }}>
       <h1 style={{
@@ -38,6 +38,7 @@ function Publications() {
         <Container className="my-4">
           <Row className="g-4">
             {servicios.map((servicio, index) => (
+              
               <Col key={index} xs={12} sm={6} md={4}>
                 <Gallery
                   title={servicio.name}
@@ -47,6 +48,8 @@ function Publications() {
                   id={servicio.id}
                   author={`${servicio.user.name} ${servicio.user.last_name}` }
                   phone={servicio.user.phone}
+                  stars={servicio.stars}
+                  category={servicio.category}
                 />
               </Col>
             ))}

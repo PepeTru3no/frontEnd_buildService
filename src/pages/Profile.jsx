@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/Authcontext";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { Button, Form } from "react-bootstrap";
+import { Button, Dropdown, Form, SplitButton } from "react-bootstrap";
 
 function Profile() {
   const { usuario } = useContext(AuthContext);
@@ -11,8 +10,8 @@ function Profile() {
     description: ''
   });
   const [file, setFile] = useState([]);
-  const token= localStorage.getItem('token');
-  const navigate = useNavigate();
+  const [category, setCategory] = useState('Seleccione una Categoria');
+  const token = localStorage.getItem('token');
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
   };
@@ -23,12 +22,17 @@ function Profile() {
     }));
   };
 
+  const handleSelect = (e) => {
+    setCategory(e);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const service = {
       name: formData.name,
       description: formData.description,
-      user_id: usuario[0].id
+      user_id: usuario[0].id,
+      category: category.toLocaleLowerCase()
     }
     const Authorization = {
       headers: {
@@ -38,6 +42,12 @@ function Profile() {
     axios.post('http://localhost:3000/services', service, Authorization)
       .then(({ data }) => {
         saveImage(data.id);
+        setFormData({
+          name: '',
+          description: ''
+        })
+        setFile('');
+        setCategory('Seleccione una Categoria');
       })
       .catch((error) => {
         console.log(error);
@@ -61,6 +71,25 @@ function Profile() {
         console.log(error);
       })
   }
+
+  const categorys = [
+    {
+      src: 'src/assets/imgs/Fontaneria.png',
+      texto: 'Fontanería'
+    },
+    {
+      src: 'src/assets/imgs/Electricidad.png',
+      texto: 'Electricidad'
+    },
+    {
+      src: 'src/assets/imgs/Limpieza.png',
+      texto: 'Limpieza'
+    },
+    {
+      src: 'src/assets/imgs/Construcción.png',
+      texto: 'Construcción y montaje'
+    },
+  ];
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold">Perfil del Usuario</h1>
@@ -80,7 +109,7 @@ function Profile() {
             <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
             {token ?
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3">
                   <Form.Label>Nombre de su servicio</Form.Label>
                   <Form.Control type="text" name="name" placeholder="Nombre del servicio"
                     value={formData.name}
@@ -89,7 +118,7 @@ function Profile() {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3">
                   <Form.Label>Agregue una descripcion de su servicio.</Form.Label>
                   <Form.Control type="textarea" name="description" placeholder="Descripcion"
                     value={formData.description}
@@ -97,8 +126,24 @@ function Profile() {
                     required
                   />
                 </Form.Group>
+                <Form.Group className="mb-3">
+                  <SplitButton
+                    key='Info'
+                    id={`dropdown-split-variants-info`}
+                    variant='info'
+                    title={category}
+                    onSelect={handleSelect}
+                  >
+                    {categorys.map((option) => (
+                      <>
+                        <Dropdown.Divider />
+                        <Dropdown.Item eventKey={option.texto}>{option.texto}</Dropdown.Item>
+                      </>
+                    ))}
+                  </SplitButton>
+                </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3">
                   <Form.Label>imagenes de su servicio</Form.Label>
                   <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
                     multiple
@@ -117,7 +162,7 @@ function Profile() {
         </>
 
       ) : (
-        <div onLoad={navigate('/login')} />
+        <h1>No autorizado</h1>
       )}
     </div>
   );

@@ -35,6 +35,7 @@ function  Register(){
     axios.post('http://localhost:3000/users',formData)
     .then( (response) =>{
       console.log(response);
+      alert("Usuario creado correctamente, inicia sesion.");
       navigate('/login');
     })
     .catch((error)=> {

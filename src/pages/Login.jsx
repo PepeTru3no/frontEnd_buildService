@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../context/Authcontext';
+import { AuthContext } from '../context/AuthContext';
 import { TokenContext } from '../context/TokenContext';
 
 function Login() {/* 
