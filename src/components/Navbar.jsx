@@ -10,7 +10,7 @@ function navbar() {
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
           <img
-            src="src\assets\imgs\Logo-pagina.png"
+            src="./src/assets/imgs/Logo-pagina.png"
             alt="Logo"
             width="70"
             height="40"

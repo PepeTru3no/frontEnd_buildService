@@ -13,9 +13,9 @@ const Footer = () => {
           <Col md={3} className="text-end">
             <p className="fw-bold mb-2">Síguenos</p>
             <div className="d-flex justify-content-end gap-2">
-              <Image src="src\assets\imgs\Logo-facebook.png" width={30} height={30} alt="Red 1" />
-              <Image src="src\assets\imgs\Logo-instagram.png" width={30} height={30} alt="Red 2" />
-              <Image src="src\assets\imgs\Logo-linkedin.png" width={30} height={30} alt="Red 3" />
+              <Image src="./src/assets/imgs/Logo-facebook.png" width={30} height={30} alt="Red 1" />
+              <Image src="./src/assets/imgs/Logo-instagram.png" width={30} height={30} alt="Red 2" />
+              <Image src="./src/assets/imgs/Logo-linkedin.png" width={30} height={30} alt="Red 3" />
             </div>
           </Col>
         </Row>

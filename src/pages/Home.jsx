@@ -100,16 +100,16 @@ function Home() {
             marginTop: '1.5rem' 
             }}>
           {[
-            { src: 'src/assets/imgs/Busca-servicio.png', 
+            { src: './src/assets/imgs/Busca-servicio.png', 
               texto: 'Busca un servicio' 
              },
-            { src: 'src/assets/imgs/Encuentra-profesionales.png', 
+            { src: './src/assets/imgs/Encuentra-profesionales.png', 
               texto: 'Encuentra profesionales' 
              },
-            { src: 'src/assets/imgs/Contacta-favorito.png', 
+            { src: './src/assets/imgs/Contacta-favorito.png', 
               texto: 'Contacta a tu favorito' 
              },
-            { src: 'src/assets/imgs/Disfruta-servicio.png', 
+            { src: './src/assets/imgs/Disfruta-servicio.png', 
               texto: 'Disfruta del servicio' 
              },
           ].map((item, index) => (
@@ -133,16 +133,16 @@ function Home() {
             marginTop: '1.5rem' 
             }}>
           {[
-            { src: 'src/assets/imgs/Fontaneria.png', 
-              texto: 'Fontanería' 
+            { src: './src/assets/imgs/Fontaneria.png', 
+              texto: './Fontanería' 
               },
-            { src: 'src/assets/imgs/Electricidad.png', 
+            { src: './src/assets/imgs/Electricidad.png', 
               texto: 'Electricidad' 
               },
-            { src: 'src/assets/imgs/Limpieza.png', 
+            { src: './src/assets/imgs/Limpieza.png', 
               texto: 'Limpieza' 
               },
-            { src: 'src/assets/imgs/Construcción.png', 
+            { src: './src/assets/imgs/Construcción.png', 
               texto: 'Construcción y montaje' 
               },
           ].map((item, index) => (
