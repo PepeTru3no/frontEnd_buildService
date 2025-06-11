@@ -1,1 +1,1 @@
-export const ENDPOINT= 'https://apireparapp.netlify.app/';
+export const ENDPOINT= 'https://apireparapp.netlify.app';
