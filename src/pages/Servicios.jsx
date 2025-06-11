@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from "react-router-dom";
+import { ENDPOINT } from "../util/values";
 
 function Servicios() {
   const [servicios, setServicios] = useState([]);
@@ -17,7 +18,7 @@ function Servicios() {
   useEffect(() => {
     // API
     axios
-      .get("http://localhost:3000/services")
+      .get(`${ENDPOINT}/services`)
       .then(({ data }) => {
         setServicios(data.slice(0, 5));
       })
@@ -49,7 +50,7 @@ function Servicios() {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios.post('http://localhost:3000/services', service, Authorization)
+    axios.post(`${ENDPOINT}/services`, service, Authorization)
       .then(({ data }) => {
         saveImage(data.id);
       })
@@ -63,7 +64,7 @@ function Servicios() {
     for (let i = 0; i < file.length; i++) {
       formData.append("file", file[i]);
     }
-    axios.post(`http://localhost:3000/images/${id}`, formData, {
+    axios.post(`${ENDPOINT}/images/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -86,7 +87,7 @@ function Servicios() {
           {servicio.images.map((file, index) => (
             <img
               key={index}
-              src={`http://localhost:3000/uploads/${file.sample_image}`}
+              src={`${ENDPOINT}/uploads/${file.sample_image}`}
               alt={file.sample_image}
               width="100"
             />

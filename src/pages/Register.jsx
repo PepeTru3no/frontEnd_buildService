@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import { ENDPOINT } from "../util/values";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ function Register() {
       alert("Las contraseñas no coinciden");
       return;
     }
-    axios.post('http://localhost:3000/users',formData)
+    axios.post(`${ENDPOINT}/users`,formData)
     .then( (response) =>{
       console.log(response);
       navigate('/login');

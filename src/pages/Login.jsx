@@ -6,11 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { TokenContext } from '../context/TokenContext';
+import { ENDPOINT } from '../util/values';
 
 function Login() {
-  /* 
-  const token= localStorage.getItem('token');
-  if(token)localStorage.clear; */
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,7 +31,7 @@ function Login() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/users/login", formData)
+      .post(`${ENDPOINT}/users/login`, formData)
       .then(({ data }) => {
         setUsuario(data.user); // ✅ guardamos como objeto
         localStorage.setItem("token", data.token); // ✅ persistimos el token

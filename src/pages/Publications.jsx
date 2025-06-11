@@ -3,6 +3,8 @@ import Gallery from '../components/Gallery';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Paginator from '../components/Pagination';
+import { ENDPOINT } from '../util/values';
+
 function Publications() {
   const [servicios, setServicios] = useState();
   const [count, setCount] = useState();
@@ -12,7 +14,7 @@ function Publications() {
   useEffect(() => {
     const queryParams = `?limit=${limit}&page=${page}`;
     axios
-      .get(`http://localhost:3000/services${queryParams}`)
+      .get(`${ENDPOINT}/services${queryParams}`)
       .then(({ data }) => {
         setServicios(data.response);
         setCount(data.count);
@@ -43,7 +45,7 @@ function Publications() {
                 <Gallery
                   title={servicio.name}
                   text={servicio.description}
-                  image={`http://localhost:3000/uploads/${(servicio.images.length !== 0) ? servicio.images[0].sample_image : ""}`}
+                  image={`${ENDPOINT}/uploads/${(servicio.images.length !== 0) ? servicio.images[0].sample_image : ""}`}
                   buttonText={'Ver mas...'}
                   id={servicio.id}
                   author={`${servicio.user.name} ${servicio.user.last_name}` }

@@ -9,6 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReactStars from 'react-stars';
+import { ENDPOINT } from '../util/values';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
@@ -20,7 +21,7 @@ function Interaction() {
   const { id } = useParams();
   const token = localStorage.getItem('token');
   useEffect(() => {
-    axios.get(`http://localhost:3000/services/${id}`)
+    axios.get(`${ENDPOINT}/services/${id}`)
       .then(({ data }) => {
         setService(data);
         setComentarios(data.comments);
@@ -46,7 +47,7 @@ function Interaction() {
           Authorization: `Bearer ${token}`,
         },
       };
-      axios.post('http://localhost:3000/comments',
+      axios.post(`${ENDPOINT}/comments`,
         data,
         Authorization
       )
@@ -65,7 +66,7 @@ function Interaction() {
       newStars: e
     }
     console.log(data);
-    axios.put(`http://localhost:3000/services/${id}`, data)
+    axios.put(`${ENDPOINT}/services/${id}`, data)
       .then(({ status, data }) => {
         if (status == 200) {
           alert(`Gracias por calificar nuestro sercicio de :\n${service.name.toUpperCase()}`);

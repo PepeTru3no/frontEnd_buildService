@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import fondoPrincipal from '../assets/imgs/Fondo-principal.jpg';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ENDPOINT } from '../util/values';
 
 function Home() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function Home() {
   const [isLoad, setIsLoad]= useState(false);
 
   useEffect(()=>{
-      axios.get('http://localhost:3000/comments?limit=6')
+      axios.get(`${ENDPOINT}/comments?limit=6`)
       .then(({data})=>{
         setComments(data);
         setIsLoad(true);

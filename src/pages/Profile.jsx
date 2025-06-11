@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { Button, Dropdown, Form, SplitButton } from "react-bootstrap";
+import { ENDPOINT } from "../util/values";
 
 function Profile() {
   const { usuario } = useContext(AuthContext);
@@ -39,7 +40,7 @@ function Profile() {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios.post('http://localhost:3000/services', service, Authorization)
+    axios.post(`${ENDPOINT}/services`, service, Authorization)
       .then(({ data }) => {
         saveImage(data.id);
         setFormData({
@@ -59,7 +60,7 @@ function Profile() {
     for (let i = 0; i < file.length; i++) {
       formData.append("file", file[i]);
     }
-    axios.post(`http://localhost:3000/images/${id}`, formData, {
+    axios.post(`${ENDPOINT}/images/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
