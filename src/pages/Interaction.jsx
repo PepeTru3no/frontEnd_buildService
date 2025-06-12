@@ -39,7 +39,7 @@ function Interaction() {
     if (comentario.trim() !== '') {
       const data = {
         comment: comentario,
-        user_id: usuario[0].id,
+        user_id: usuario.id,
         service_id: service.id
       }
       const Authorization = {
@@ -65,7 +65,6 @@ function Interaction() {
       stars: Number(stars),
       newStars: e
     }
-    console.log(data);
     axios.put(`${ENDPOINT}/services/${id}`, data)
       .then(({ status, data }) => {
         if (status == 200) {
@@ -99,9 +98,9 @@ function Interaction() {
           <ListGroup className="list-group-flush">
             {usuario && token ?
               <>
-                <ListGroup.Item>{`${usuario[0].name} ${usuario[0].last_name}`}</ListGroup.Item>
-                <ListGroup.Item>{usuario[0].phone}</ListGroup.Item>
-                <ListGroup.Item>{usuario[0].email}</ListGroup.Item>
+                <ListGroup.Item>{`${usuario.name} ${usuario.last_name}`}</ListGroup.Item>
+                <ListGroup.Item>{usuario.phone}</ListGroup.Item>
+                <ListGroup.Item>{usuario.email}</ListGroup.Item>
               </>
               :
               <>

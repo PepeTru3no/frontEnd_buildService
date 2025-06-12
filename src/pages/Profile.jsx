@@ -32,7 +32,7 @@ function Profile() {
     const service = {
       name: formData.name,
       description: formData.description,
-      user_id: usuario[0].id,
+      user_id: usuario.id,
       category: category.toLocaleLowerCase()
     }
     const Authorization = {
@@ -96,7 +96,8 @@ function Profile() {
       <h1 className="text-xl font-bold">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
-          <p>Bienvenido, {usuario[0].name.toUpperCase()}</p>
+        {console.log(usuario)}
+          <p>Bienvenido, {usuario.name.toUpperCase()}</p>
           <div
             style={{
               backgroundColor: 'black',
