@@ -1,1 +1,1 @@
-export const ENDPOINT= 'https://apireparapp.onrender.com';
+export const ENDPOINT= 'http://localhost:3000';
