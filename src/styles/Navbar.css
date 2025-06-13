@@ -9,3 +9,7 @@
     border-color: #14506d !important;
     transition: background-color 0.3s ease, ;
 }
+
+.brand-nav {
+    color: #0e2e3c;
+}
