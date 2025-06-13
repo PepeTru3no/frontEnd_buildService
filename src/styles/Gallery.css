@@ -1,0 +1,31 @@
+.gallery-card {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.gallery-card img {
+    height: 170px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.gallery-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.gallery-buttons > .btn {
+  flex: 1;
+  text-align: center;
+}

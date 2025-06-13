@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Paginator from '../components/Pagination';
 import { ENDPOINT } from '../util/values';
+import '../styles/Publications.css';
 import { BookmarkPlus, BookmarkCheckFill } from 'react-bootstrap-icons';
 import { TokenContext } from "../context/TokenContext";
 import { AuthContext } from '../context/AuthContext';
@@ -63,19 +64,15 @@ function Publications() {
   }
 
   return (
-    <div style={{ height: '100vh', }}>
-      <h1 style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '2rem',
-      }}>
+    <div className="publications-background">
+      <h1 className="publications-title">
         Galeria de Publicaciones
       </h1>
       {!isLoad ?
-        <h1>Cargando Servicios....</h1>
+        <h1 className="publications-charge">Cargando Servicios....</h1>
         :
         <Container className="my-4">
-          <Row className="g-4">
+          <Row className="g-4 justify-content-center">
             {servicios.map((servicio, index) => (
 
               <Col key={index} xs={12} sm={6} md={4}>

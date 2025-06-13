@@ -1,10 +1,10 @@
 import axios from "axios";
-import fondo from "../assets/imgs/Fondo-register.webp";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINT } from "../util/values";
+import '../styles/Register.css';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -44,34 +44,14 @@ function Register() {
     })
   };
   return (
-    <div
-      className="fondo-login"
-      style={{
-        backgroundImage: `url(${fondo})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "black",
-          opacity: 0.7,
-          padding: "2rem",
-          borderRadius: "15px",
-          maxWidth: "400px",
-          width: "100%",
-        }}
-      >
-        <h2 className="text-center mb-4" style={{ color: "white" }}>
+    <div className="register-background">
+      <div className="register-form">
+        <h2 className="register-title">
           Registrarse
         </h2>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Control
               type="text"
               name="name"
@@ -82,7 +62,7 @@ function Register() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicLastName">
             <Form.Control
               type="text"
               name="last_name"
@@ -93,7 +73,7 @@ function Register() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicAge">
             <Form.Control
               type="number"
               name="age"
@@ -101,10 +81,11 @@ function Register() {
               value={formData.age}
               onChange={handleChange}
               required
+              min={18}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPhone">
             <Form.Control
               type="text"
               name="phone"
@@ -145,7 +126,7 @@ function Register() {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
             <Form.Control
               type="password"
               name="confirmarPassword"
@@ -157,12 +138,7 @@ function Register() {
           </Form.Group>
 
           <div className="d-flex justify-content-center">
-            <Button
-              style={{
-                backgroundColor: "#0e2e3c",
-                border: "#0e2e3c",
-                opacity: 1,
-              }}
+            <Button className="register-button"
               type="submit"
             >
               Registrarse
