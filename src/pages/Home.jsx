@@ -100,16 +100,16 @@ function Home() {
             marginTop: '1.5rem' 
             }}>
           {[
-            { src: './src/assets/imgs/Busca-servicio.png', 
+            { src: '/imgs/Busca-servicio.png', 
               texto: 'Busca un servicio' 
              },
-            { src: './src/assets/imgs/Encuentra-profesionales.png', 
+            { src: '/imgs/Encuentra-profesionales.png', 
               texto: 'Encuentra profesionales' 
              },
-            { src: './src/assets/imgs/Contacta-favorito.png', 
+            { src: '/imgs/Contacta-favorito.png', 
               texto: 'Contacta a tu favorito' 
              },
-            { src: './src/assets/imgs/Disfruta-servicio.png', 
+            { src: '/imgs/Disfruta-servicio.png', 
               texto: 'Disfruta del servicio' 
              },
           ].map((item, index) => (
@@ -133,16 +133,16 @@ function Home() {
             marginTop: '1.5rem' 
             }}>
           {[
-            { src: './src/assets/imgs/Fontaneria.png', 
-              texto: './Fontanería' 
+            { src: '/imgs/Fontaneria.png', 
+              texto: 'Fontanería' 
               },
-            { src: './src/assets/imgs/Electricidad.png', 
+            { src: '/imgs/Electricidad.png', 
               texto: 'Electricidad' 
               },
-            { src: './src/assets/imgs/Limpieza.png', 
+            { src: '/imgs/Limpieza.png', 
               texto: 'Limpieza' 
               },
-            { src: './src/assets/imgs/Construcción.png', 
+            { src: '/imgs/Construcción.png', 
               texto: 'Construcción y montaje' 
               },
           ].map((item, index) => (
@@ -185,32 +185,12 @@ function Home() {
           justifyContent: 'center', 
           gap: '1rem', 
           marginTop: '1.5rem' }}>
-        {/* [
-          { nombre: 'Nombre1', 
-            texto: 'Texto1' 
-            },
-          { nombre: 'Nombre2', 
-            texto: 'Texto2' 
-            },
-          { nombre: 'Nombre3', 
-            texto: 'Texto3' 
-            },
-          { nombre: 'Nombre4', 
-            texto: 'Texto4' 
-            },
-          { nombre: 'Nombre5', 
-            texto: 'Texto5' 
-            },
-          { nombre: 'Nombre6', 
-            texto: 'Texto6' 
-            },
-        ] */comments.map((item, index) => (
+        {comments.map((item, index) => (
           <div key={index} style={{ 
               width: '250px', 
               border: '1px solid #ccc', 
               borderRadius: '10px', 
               padding: '1rem' }}>
-            {/* <h4>{item.name}</h4> */}
             <p>{item.comment}</p>
           </div>
         ))}

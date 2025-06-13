@@ -141,7 +141,7 @@ function Interaction() {
                 count={5}
                 value={service.stars}
                 size={12}
-                color2={'#ffd700'} /></p>
+                color2={'#ffd700'} edit={false} /></p>
               <p>
                 {service.description}
               </p>
