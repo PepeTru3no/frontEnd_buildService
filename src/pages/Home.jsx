@@ -134,7 +134,7 @@ function Home() {
             }}>
           {[
             { src: './src/assets/imgs/Fontaneria.png', 
-              texto: './Fontanería' 
+              texto: 'Fontanería' 
               },
             { src: './src/assets/imgs/Electricidad.png', 
               texto: 'Electricidad' 
@@ -185,26 +185,7 @@ function Home() {
           justifyContent: 'center', 
           gap: '1rem', 
           marginTop: '1.5rem' }}>
-        {/* [
-          { nombre: 'Nombre1', 
-            texto: 'Texto1' 
-            },
-          { nombre: 'Nombre2', 
-            texto: 'Texto2' 
-            },
-          { nombre: 'Nombre3', 
-            texto: 'Texto3' 
-            },
-          { nombre: 'Nombre4', 
-            texto: 'Texto4' 
-            },
-          { nombre: 'Nombre5', 
-            texto: 'Texto5' 
-            },
-          { nombre: 'Nombre6', 
-            texto: 'Texto6' 
-            },
-        ] */comments.map((item, index) => (
+        {comments.map((item, index) => (
           <div key={index} style={{ 
               width: '250px', 
               border: '1px solid #ccc', 

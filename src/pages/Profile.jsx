@@ -96,7 +96,6 @@ function Profile() {
       <h1 className="text-xl font-bold">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
-        {console.log(usuario)}
           <p>Bienvenido, {usuario.name.toUpperCase()}</p>
           <div
             style={{

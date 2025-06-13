@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Gallery from '../components/Gallery';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Paginator from '../components/Pagination';
 import { ENDPOINT } from '../util/values';
+import { BookmarkPlus, BookmarkCheckFill } from 'react-bootstrap-icons';
+import { TokenContext } from "../context/TokenContext";
+import { AuthContext } from '../context/AuthContext';
 
 function Publications() {
   const [servicios, setServicios] = useState();
@@ -11,8 +14,11 @@ function Publications() {
   const [isLoad, setIsLoad] = useState(false);
   const [limit] = useState(5);
   const [page, setPage] = useState(1);
+  const { token } = useContext(TokenContext);
+  const { usuario } = useContext(AuthContext);
   useEffect(() => {
-    const queryParams = `?limit=${limit}&page=${page}`;
+    const us_id=usuario ? `&user_id=${usuario.id}`: '';
+    const queryParams = `?limit=${limit}&page=${page}${us_id}`;
     axios
       .get(`${ENDPOINT}/services${queryParams}`)
       .then(({ data }) => {
@@ -23,7 +29,38 @@ function Publications() {
       .catch((error) => {
         console.error("Error al cargar servicios:", error);
       });
-  }, [page]);
+  }, [page, isLoad]);
+
+  const addFavorite = (service_id) => {
+    const data={
+      user_id: usuario.id,
+      service_id
+    }
+      axios.post('http://localhost:3000/favorites', data)
+      .then(({data})=>{
+        if(data){
+          alert("Servicio agregado a favoritos");
+        }  
+        setIsLoad(false); 
+      })
+      .catch(err=>{
+        console.log(err.message);
+      });
+  }
+
+  const deleteFavorite = (service_id) => {
+    const queryParams=`?user_id=${usuario.id}&service_id=${service_id}`
+    axios.delete(`http://localhost:3000/favorites${queryParams}`)
+      .then(({data})=>{
+        if(data.message=== 'eliminado'){
+          alert(`Servicio ${data.message} de favoritos`);
+        } 
+        setIsLoad(false); 
+      })
+      .catch(err=>{
+        console.log(err.message);
+      });
+  }
 
   return (
     <div style={{ height: '100vh', }}>
@@ -40,7 +77,7 @@ function Publications() {
         <Container className="my-4">
           <Row className="g-4">
             {servicios.map((servicio, index) => (
-              
+
               <Col key={index} xs={12} sm={6} md={4}>
                 <Gallery
                   title={servicio.name}
@@ -48,10 +85,17 @@ function Publications() {
                   image={`${ENDPOINT}/uploads/${(servicio.images.length !== 0) ? servicio.images[0].sample_image : ""}`}
                   buttonText={'Ver mas...'}
                   id={servicio.id}
-                  author={`${servicio.user.name} ${servicio.user.last_name}` }
+                  author={`${servicio.user.name} ${servicio.user.last_name}`}
                   phone={servicio.user.phone}
                   stars={servicio.stars}
                   category={servicio.category}
+                  icon={token ? servicio.isFav ?
+                    <>
+                      <BookmarkCheckFill size={18} onClick={() => deleteFavorite(servicio.id)} />
+                    </>
+                    :
+                    <BookmarkPlus size={18} onClick={() => addFavorite(servicio.id)} />
+                    : ""}
                 />
               </Col>
             ))}
