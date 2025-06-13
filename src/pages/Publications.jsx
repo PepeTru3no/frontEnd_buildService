@@ -37,7 +37,7 @@ function Publications() {
       user_id: usuario.id,
       service_id
     }
-      axios.post('http://localhost:3000/favorites', data)
+      axios.post(`${ENDPOINT}/favorites`, data)
       .then(({data})=>{
         if(data){
           alert("Servicio agregado a favoritos");
@@ -51,7 +51,7 @@ function Publications() {
 
   const deleteFavorite = (service_id) => {
     const queryParams=`?user_id=${usuario.id}&service_id=${service_id}`
-    axios.delete(`http://localhost:3000/favorites${queryParams}`)
+    axios.delete(`${ENDPOINT}/favorites${queryParams}`)
       .then(({data})=>{
         if(data.message=== 'eliminado'){
           alert(`Servicio ${data.message} de favoritos`);
