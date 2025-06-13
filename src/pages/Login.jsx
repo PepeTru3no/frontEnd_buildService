@@ -1,5 +1,4 @@
 import axios from 'axios';
-import fondo from '../assets/imgs/Fondo-login.jpg';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { TokenContext } from '../context/TokenContext';
 import { ENDPOINT } from '../util/values';
+import '../styles/Login.css';
 
 function Login() {
 
@@ -45,27 +45,9 @@ function Login() {
   };
 
   return (
-    <div
-      className="fondo-login"
-      style={{
-        backgroundImage: `url(${fondo})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          opacity: 0.9,
-          padding: "2rem",
-          borderRadius: "15px",
-          maxWidth: "400px",
-          width: "100%",
-        }}
+    <div className="login-background">
+      <div className='login-card'
+        
       >
         <h2 className="text-center mb-4">Inicio de Sesión</h2>
 
@@ -93,7 +75,7 @@ function Login() {
           </Form.Group>
 
           <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit">
+            <Button className='login-button' variant="primary" type="submit">
               Ingresar
             </Button>
           </div>

@@ -2,11 +2,12 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import ReactStars from 'react-stars';
+import '../styles/Gallery.css';
 
 function Gallery({ title, text, image, buttonText, id, author, phone, stars, category }) {
   const token = localStorage.getItem('token');
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className="gallery-card">
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{title} <ReactStars
@@ -18,6 +19,7 @@ function Gallery({ title, text, image, buttonText, id, author, phone, stars, cat
         <Card.Text>{`Autor: ${author}`}</Card.Text>
         <Card.Text>{`Telefono: ${phone}`}</Card.Text>
         <Card.Text>{text}</Card.Text>
+        <div className="gallery-buttons">
         {!token ?
           <Button as={Link} to={`/interaction/${id}`} variant="primary">{buttonText}</Button>
           :
@@ -26,7 +28,7 @@ function Gallery({ title, text, image, buttonText, id, author, phone, stars, cat
             <Button as={Link} to={`/interaction/${id}`} variant="primary">Comentar</Button>
           </>
         }
-
+        </div>
       </Card.Body>
     </Card>
   );

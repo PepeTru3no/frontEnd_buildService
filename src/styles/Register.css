@@ -1,0 +1,35 @@
+.register-background {
+  background-image: url('../assets/imgs/Fondo-register.webp');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-form{
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.register-title{
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.register-button{
+    background-color:  #0e2e3c;
+    border: 1px solid #0e2e3c;
+    opacity: 1;
+}
+
+.register-button:hover {
+    background-color: #14506d;
+    border-color: #14506d;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}

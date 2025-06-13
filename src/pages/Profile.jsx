@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { Button, Dropdown, Form, SplitButton } from "react-bootstrap";
 import { ENDPOINT } from "../util/values";
+import '../styles/Profile.css';
 
 function Profile() {
   const { usuario } = useContext(AuthContext);
@@ -92,23 +93,19 @@ function Profile() {
     },
   ];
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Perfil del Usuario</h1>
+    <div className="profile-background">
+      <h1 className="profile-title">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
         {console.log(usuario)}
-          <p>Bienvenido, {usuario.name.toUpperCase()}</p>
-          <div
-            style={{
-              backgroundColor: 'black',
-              opacity: 0.7,
-              padding: '2rem',
-              borderRadius: '15px',
-              maxWidth: '400px',
-              width: '100%',
-            }}
-          >
-            <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
+          <p className="profile-welcome">
+          Bienvenido, {usuario.name.toUpperCase()}
+          </p>
+          
+          <div className="profile-form-container">
+            <h2 className="profile-form-title">
+              Crear servicio
+            </h2>
             {token ?
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
@@ -121,7 +118,7 @@ function Profile() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Agregue una descripcion de su servicio.</Form.Label>
+                  <Form.Label>Describe tu servicio.</Form.Label>
                   <Form.Control type="textarea" name="description" placeholder="Descripcion"
                     value={formData.description}
                     onChange={handleChange}
@@ -153,7 +150,7 @@ function Profile() {
                     required />
                 </Form.Group>
                 <div className="d-flex justify-content-center">
-                  <Button style={{ backgroundColor: "#0e2e3c", border: "#0e2e3c", opacity: 1 }} type="submit">
+                  <Button className="profile-submit-button" type="submit">
                     Grabar servicio
                   </Button>
                 </div>

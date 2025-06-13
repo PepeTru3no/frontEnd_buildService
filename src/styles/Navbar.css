@@ -1,0 +1,11 @@
+.button-nav{
+    background-color:  #0e2e3c !important;
+    border: 1px solid #0e2e3c !important;
+    opacity: 1;
+}
+
+.button-nav:hover {
+    background-color: #14506d !important;
+    border-color: #14506d !important;
+    transition: background-color 0.3s ease, ;
+}

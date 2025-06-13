@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Navbar, Container, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { TokenContext } from "../context/TokenContext";
+import '../styles/Navbar.css';
 
 function navbar() {
   const {token} = useContext(TokenContext);
@@ -35,7 +36,7 @@ function navbar() {
           {!token ?
             <Nav className="ms-auto d-flex align-items-center">
               <div className="d-none d-lg-flex">
-                <Button as={Link} to="/register" variant="primary" className="me-2">
+                <Button as={Link} to="/register" variant="primary" className="button-nav me-2">
                   Registrarse
                 </Button>
                 <Nav.Link as={Link} to="/login">Iniciar sesión</Nav.Link>
@@ -51,7 +52,7 @@ function navbar() {
             :
             <Nav className="ms-auto d-flex align-items-center">
               <div className="d-none d-lg-flex">
-                <Button as={Link} to="/profile" variant="primary" className="me-2">
+                <Button as={Link} to="/profile" variant="primary" className="button-nav me-2">
                   Perfil
                 </Button>
                 <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
