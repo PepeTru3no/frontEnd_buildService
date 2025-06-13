@@ -13,3 +13,10 @@
 .brand-nav {
     color: #0e2e3c;
 }
+
+.logo-nav {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    vertical-align: top;
+}

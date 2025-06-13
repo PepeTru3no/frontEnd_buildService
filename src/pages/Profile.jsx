@@ -98,17 +98,9 @@ function Profile() {
       {usuario && token ? (
         <>
         {console.log(usuario)}
-          <p>Bienvenido, {usuario.name.toUpperCase()}</p>
-          <div
-            style={{
-              backgroundColor: 'black',
-              opacity: 0.7,
-              padding: '2rem',
-              borderRadius: '15px',
-              maxWidth: '400px',
-              width: '100%',
-            }}
-          >
+          <p className="profile-form-title
+          ">Bienvenido, {usuario.name.toUpperCase()}</p>
+          <div className="profile-form-container">
             <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
             {token ?
               <Form onSubmit={handleSubmit}>

@@ -13,9 +13,7 @@ function navbar() {
           <img
             src="/imgs/Logo-pagina.png"
             alt="Logo"
-            width="70"
-            height="40"
-            className="d-inline-block align-top"
+            className="logo-nav"
           />
           <span className="fs-4 fw-bold brand-nav">ReparApp</span>
         </Navbar.Brand>
