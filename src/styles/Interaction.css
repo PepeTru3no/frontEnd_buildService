@@ -1,5 +1,5 @@
 .interaction-background {
-  background-image: url('/imgs/Fondo-interaction.webp');
+  background-image: url('../assets/imgs/Fondo-interaction.webp');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
