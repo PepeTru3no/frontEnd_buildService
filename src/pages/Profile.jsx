@@ -100,9 +100,57 @@ function Profile() {
         {console.log(usuario)}
           <p className="profile-form-title
           ">Bienvenido, {usuario.name.toUpperCase()}</p>
+          <div>
+            <div>
+              <h2 className="text-white mt-5 mb-3">Servicios Creados</h2>
+              <table className="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Fecha creación</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Ejemplo de fila */}
+                  <tr>
+                    <td>Servicio Ejemplo</td>
+                    <td>2025-06-14</td>
+                    <td>
+                      <button type="button" className="btn btn-danger btn-sm me-2">
+                        Eliminar
+                      </button>
+                      <button type="button" className="btn btn-primary btn-sm">
+                        Editar
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+            <h2 className="text-white mt-5 mb-3">Mis Favoritos</h2>
+              <table className="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Ejemplo de fila */}
+                  <tr>
+                    <td>Servicio Ejemplo</td>
+                    <td>Insertar el icono</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           <div className="profile-form-container">
             <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
             {token ?
+
+
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Nombre de su servicio</Form.Label>
@@ -150,9 +198,11 @@ function Profile() {
                     Grabar servicio
                   </Button>
                 </div>
-              </Form> :
+              </Form> 
+            
+              :
               <h1>Para crear un servicio debes estar registrado</h1>}
-
+          </div>
           </div>
         </>
 
