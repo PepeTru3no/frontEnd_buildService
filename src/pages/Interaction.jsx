@@ -3,13 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import fondo from '../assets/imgs/Fondo-interaction.webp';
 import perfil from '../assets/imgs/Perfil.png';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReactStars from 'react-stars';
 import { ENDPOINT } from '../util/values';
+import '../styles/Interaction.css';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
@@ -78,22 +78,10 @@ function Interaction() {
   }
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-        backgroundImage: `url(${fondo})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '2rem',
-      }}
-    >
-      <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
-        <Card style={{ width: '14rem' }}>
-          <Card.Img variant="top" src={perfil} />
+    <div className="interaction-background">
+      <div className="interaction-card" >
+        <Card>
+          <Card.Img className="interaction-img" variant="top" src={perfil} />
           <Card.Body />
           <ListGroup className="list-group-flush">
             {usuario && token ?
@@ -104,7 +92,7 @@ function Interaction() {
               </>
               :
               <>
-                <ListGroup.Item>Invitado</ListGroup.Item>
+                <ListGroup.Item className="interaction-text">Invitado</ListGroup.Item>
               </>
             }
 
@@ -112,42 +100,24 @@ function Interaction() {
         </Card>
       </div>
       {!isLoad ?
-        <div
-          style={{
-            backgroundColor: 'white',
-            opacity: 0.95,
-            padding: '2rem',
-            borderRadius: '15px',
-            maxWidth: '400px',
-            width: '100%',
-          }}
-        >
+        <div className="interaction-load">
           Cargando Servicio...
         </div>
-        : <div
-          style={{
-            backgroundColor: 'white',
-            opacity: 0.95,
-            padding: '2rem',
-            borderRadius: '15px',
-            maxWidth: '400px',
-            width: '100%',
-          }}
-        >
+        : <div  className="interaction-form">
           <div className="mb-4">
             <Form onSubmit={handleSubmit}>
-              <p>{service.name}</p>
+              <p className="interaction-title-describe">{service.name}</p>
               <p><ReactStars
                 count={5}
                 value={service.stars}
-                size={12}
+                size={15}
                 color2={'#ffd700'} edit={false} /></p>
-              <p>
+              <p className="interaction-describe">
                 {service.description}
               </p>
               {token && usuario ?
                 <>
-                  Calificar Servicio:
+                  <h5>Calificar Servicio:</h5>
                   <ReactStars
                     count={5}
                     onChange={handleChangeStars}
@@ -162,7 +132,7 @@ function Interaction() {
                   </Form.Group>
 
                   <div className="d-flex justify-content-center">
-                    <Button variant="primary" type="submit" style={{ backgroundColor: "#0e2e3c", border: "#0e2e3c" }}>
+                    <Button variant="primary" type="submit" className="interaction-button">
                       Comentar
                     </Button>
                   </div>
@@ -178,8 +148,9 @@ function Interaction() {
             <div className="mt-4">
               <h5>Comentarios:</h5>
               <ul>
+              <li>nombre de persona que comenta</li>
                 {comentarios.map((c) => (
-                  <li key={c.id}>{c.comment}</li>
+                  <li key={c.id}>  {c.comment}</li>
                 ))}
               </ul>
             </div>
