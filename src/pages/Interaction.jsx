@@ -27,6 +27,7 @@ function Interaction() {
         setComentarios(data.comments);
         setStars(data.stars);
         setIsLoad(true);
+        console.log(comentarios);
       })
       .catch(err => {
         console.log(err);
@@ -52,7 +53,11 @@ function Interaction() {
         Authorization
       )
         .then(({ data }) => {
-          setComentarios([...comentarios, data]);
+          const commentAndUser = {
+            comment:data,
+            user:{name:usuario.name, last_name: usuario.last_name}
+        }
+          setComentarios([...comentarios, commentAndUser]);
         })
         .catch(err => console.log(err));
 
@@ -148,9 +153,14 @@ function Interaction() {
             <div className="mt-4">
               <h5>Comentarios:</h5>
               <ul>
-              <li>nombre de persona que comenta</li>
                 {comentarios.map((c) => (
-                  <li key={c.id}>  {c.comment}</li>
+                  <li key={c.comment.id}>
+                      <hr/>
+                      <p variant='light'>Comentario de {`${c.user.name} ${c.user.last_name}`}:</p>
+                      <p>{c.comment.comment}</p>
+                      <hr/>
+                      <br/>
+                  </li>
                 ))}
               </ul>
             </div>
