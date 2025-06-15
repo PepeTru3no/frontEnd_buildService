@@ -201,72 +201,37 @@ function Profile() {
       <h1 className="profile-title">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
-          <p className="profile-form-title
-          ">Bienvenido, {usuario.name.toUpperCase()}</p>
+          <p className="profile-form-title">
+            Bienvenido, 
+            {usuario.name.toUpperCase()}
+          </p>
           {isLoad ? (
-            <>
-              <ProfileOptions nameAction={'servicios'} services={services}
-                action={{ formUpdate, deleteService }} />
-              <ProfileOptions nameAction={'Favoritos'} services={favServices}
-                action={{ unFavorite }} />
-            </>
-          ) : (
-            <h2>Cargando tu contenido...</h2>
-          )}
+            <div className="profile-content">
+            <div className="profile-left-column">
+              <ProfileOptions 
+                nameAction={'Servicios'} 
+                services={services}
+                action={{ formUpdate, deleteService }} 
+              />
+              <ProfileOptions 
+                nameAction={'Favoritos'} 
+                services={favServices}
+                action={{ unFavorite }} 
+              />
+            </div>
+            
 
-          <div>
-            {/* <div>
-              <h2 className="text-white mt-5 mb-3">Servicios Creados</h2>
-              <table className="table table-dark table-striped">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Fecha creación</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody> */}
-                  {/* Ejemplo de fila */}
-                  {/* <tr>
-                    <td>Servicio Ejemplo</td>
-                    <td>2025-06-14</td>
-                    <td>
-                      <button type="button" className="btn btn-danger btn-sm me-2">
-                        Eliminar
-                      </button>
-                      <button type="button" className="btn btn-primary btn-sm">
-                        Editar
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> */}
-            {/* <div>
-              <h2 className="text-white mt-5 mb-3">Mis Favoritos</h2>
-              <table className="table table-dark table-striped">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody> */}
-                  {/* Ejemplo de fila */}
-                 {/*  <tr>
-                    <td>Servicio Ejemplo</td>
-                    <td>Insertar el icono</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> */}
+          <div className="profile-right">
             <div className="profile-form-container">
               <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
               {token ?
                 <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
                   <Form.Group className="mb-3">
                     <Form.Label>Nombre de su servicio</Form.Label>
-                    <Form.Control type="text" name="name" placeholder="Nombre del servicio"
+                    <Form.Control 
+                      type="text" 
+                      name="name" 
+                      placeholder="Nombre del servicio"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -275,7 +240,10 @@ function Profile() {
 
                   <Form.Group className="mb-3">
                     <Form.Label>Describe tu servicio.</Form.Label>
-                    <Form.Control type="textarea" name="description" placeholder="Descripcion"
+                    <Form.Control 
+                      type="textarea" 
+                      name="description" 
+                      placeholder="Descripcion"
                       value={formData.description}
                       onChange={handleChange}
                       required
@@ -301,11 +269,17 @@ function Profile() {
                   <Form.Group className="mb-3">
                     <Form.Label>imagenes de su servicio</Form.Label>
                     {isUpdate ?
-                      <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                      <Form.Control 
+                        type="file" 
+                        name="file" 
+                        placeholder="Agrege sus archivos"
                         multiple
                         onChange={handleFileChange} />
                       :
-                      <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                      <Form.Control 
+                        type="file" 
+                        name="file" 
+                        placeholder="Agrege sus archivos"
                         multiple
                         onChange={handleFileChange}
                         value={file}
@@ -313,7 +287,9 @@ function Profile() {
                     }
                   </Form.Group>
                   <div className="d-flex justify-content-center">
-                    <Button className="profile-submit-button" type="submit">
+                    <Button 
+                      className="profile-submit-button" 
+                      type="submit">
                       {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
                     </Button>
                   </div>
@@ -323,6 +299,10 @@ function Profile() {
                 <h1>Para crear un servicio debes estar registrado</h1>}
             </div>
           </div>
+          </div>
+          ) : (
+            <h2>Cargando tu contenido...</h2>
+          )}
         </>
 
       ) : (

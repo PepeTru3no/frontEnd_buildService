@@ -2,11 +2,12 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import { PencilFill, Trash2Fill, BookmarkCheckFill } from 'react-bootstrap-icons'
 import ReactStars from 'react-stars'
+import '../styles/ProfileOptions.css'
 
 const ProfileOptions = ({ services, action, nameAction }) => {
     return (
-        <div>
-            <h1>{nameAction}</h1>
+        <div className="profile-table-container">
+            <h1 className="profile-table-title">{nameAction}</h1>
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
@@ -14,39 +15,36 @@ const ProfileOptions = ({ services, action, nameAction }) => {
                         <th>Servicio</th>
                         <th>Categoria</th>
                         <th>Estrellas</th>
-                        <th colSpan={2}>Accion</th>
+                        <th colSpan={2}>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     {services.map((service, key) => (
-                        <>
-                            <tr>
+                            <tr key={service.id || key}>
                                 <td>{key + 1}</td>
                                 <td>{service.name || ""}</td>
                                 <td>{service.category || ''}</td>
-                                <td> <ReactStars
+                                <td className="profile-table-icon"> <ReactStars
                                     count={5}
                                     value={service.stars}
-                                    size={12}
+                                    size={14}
                                     color2={'#ffd700'} edit={false} />
                                 </td>
-                                {nameAction == 'servicios' ?
+                                {nameAction == 'Servicios' ?
                                     <>
                                         <td>       
-                                            <PencilFill onClick={()=>action.formUpdate(service)} />
+                                            <PencilFill title="Editar" onClick={()=>action.formUpdate(service)} />
                                         </td>
                                         <td>
-                                            <Trash2Fill onClick={()=>action.deleteService(service.id)} />
+                                            <Trash2Fill title="Borrar" onClick={()=>action.deleteService(service.id)} />
                                         </td>
                                     </>
                                     :
                                     <td colSpan={2}>
-                                        <BookmarkCheckFill onClick={()=>action.unFavorite(service.id)} />
+                                        <BookmarkCheckFill title="Favorito" onClick={()=>action.unFavorite(service.id)} />
                                     </td>
                                 }
                             </tr>
-                        </>
-
                     ))}
                 </tbody>
             </Table>
