@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { Button, Dropdown, Form, SplitButton } from "react-bootstrap";
 import { ENDPOINT } from "../util/values";
 import '../styles/Profile.css';
+import ProfileOptions from "../components/ProfileOptions";
 
 function Profile() {
   const { usuario } = useContext(AuthContext);
@@ -13,7 +14,29 @@ function Profile() {
   });
   const [file, setFile] = useState([]);
   const [category, setCategory] = useState('Seleccione una Categoria');
+  const [services, setServices] = useState();
+  const [favServices, setFavServices] = useState();
+  const [isLoad, setIsLoad] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const token = localStorage.getItem('token');
+  useEffect(() => {
+
+    const getData = async () => {
+      try {
+        const queryParams = `?user_id=${usuario.id}`
+        const { data: serv } = await axios.get(`${ENDPOINT}/services/byUser/${queryParams}`);
+        const { data: fav } = await axios.get(`${ENDPOINT}/services/favorite/${queryParams}`);
+        setServices(serv);
+        setFavServices(fav);
+        setIsLoad(true);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData();
+  }, [isLoad])
+
+
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
   };
@@ -48,7 +71,7 @@ function Profile() {
           name: '',
           description: ''
         })
-        setFile('');
+        setFile([]);
         setCategory('Seleccione una Categoria');
       })
       .catch((error) => {
@@ -92,13 +115,104 @@ function Profile() {
       texto: 'Construcción y montaje'
     },
   ];
+  const formUpdate = (service) => {
+    if (service.category) {
+      setCategory(service.category);
+    }
+    setFormData(service);
+    setIsUpdate(true);
+    alert("Formulario actualizado, ingrede sus cambios");
+  }
+  const updateService = async (e) => {
+    e.preventDefault();
+    const srv = {
+      name: formData.name,
+      description: formData.description,
+      user_id: usuario.id,
+      category: category.toLocaleLowerCase()
+    }
+    const Authorization = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const param = formData.id;
+    try {
+      const {status, data} = await axios.put(`${ENDPOINT}/services/service/${param}`, srv, Authorization);
+      if (status === 200) {
+        if (file.length > 0) {
+          saveImage(param);
+        }
+        alert(data.message);
+        setFormData({
+          name: '',
+          description: ''
+        })
+        setFile([]);
+        setCategory('Seleccione una Categoria');
+        setIsLoad(false);
+      } else {
+        console.log("Error");
+      }
+
+    } catch (error) {
+      console.log("Error al cargar servicios:", error);
+    }
+  }
+
+  const deleteService = (service_id) => {
+    const queryParams = `?user_id=${usuario.id}&service_id=${service_id}`
+    if (confirm('Confirme eliminar servicio.')) {
+      axios.delete(`${ENDPOINT}/services${queryParams}`)
+        .then(({ data }) => {
+          if (data.message === 'eliminado') {
+            alert(`Servicio ${data.message} correctamente`);
+          }
+          setIsLoad(false);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    } else {
+      alert("Operacion cancelada.");
+    }
+
+  }
+  const unFavorite = (service_id) => {
+    console.log(service_id);
+    const queryParams = `?user_id=${usuario.id}&service_id=${service_id}`
+    if (confirm("Confirme eliminar de favoritos")) {
+      axios.delete(`${ENDPOINT}/favorites${queryParams}`)
+        .then(({ data }) => {
+          if (data.message === 'eliminado') {
+            alert(`Servicio ${data.message} de favoritos`);
+          }
+          setIsLoad(false);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    } else {
+      alert("Operacion cancelada.");
+    }
+  }
   return (
     <div className="profile-background">
       <h1 className="profile-title">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
-        {console.log(usuario)}
           <p>Bienvenido, {usuario.name.toUpperCase()}</p>
+          {isLoad ? (
+            <>
+              <ProfileOptions nameAction={'servicios'} services={services}
+                action={{ formUpdate, deleteService }} />
+              <ProfileOptions nameAction={'Favoritos'} services={favServices}
+                action={{ unFavorite }} />
+            </>
+          ) : (
+            <h2>Cargando tu contenido...</h2>
+          )}
+
           <div
             style={{
               backgroundColor: 'black',
@@ -111,7 +225,7 @@ function Profile() {
           >
             <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
             {token ?
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
                 <Form.Group className="mb-3">
                   <Form.Label>Nombre de su servicio</Form.Label>
                   <Form.Control type="text" name="name" placeholder="Nombre del servicio"
@@ -148,14 +262,21 @@ function Profile() {
 
                 <Form.Group className="mb-3">
                   <Form.Label>imagenes de su servicio</Form.Label>
-                  <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
-                    multiple
-                    onChange={handleFileChange}
-                    required />
+                  {isUpdate ?
+                    <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                      multiple
+                      onChange={handleFileChange} />
+                    :
+                    <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                      multiple
+                      onChange={handleFileChange}
+                      value={file}
+                      required />
+                  }
                 </Form.Group>
                 <div className="d-flex justify-content-center">
                   <Button className="profile-submit-button" type="submit">
-                    Grabar servicio
+                    {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
                   </Button>
                 </div>
               </Form> :
