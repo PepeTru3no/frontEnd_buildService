@@ -138,7 +138,7 @@ function Profile() {
     };
     const param = formData.id;
     try {
-      const {status, data} = await axios.put(`${ENDPOINT}/services/service/${param}`, srv, Authorization);
+      const { status, data } = await axios.put(`${ENDPOINT}/services/service/${param}`, srv, Authorization);
       if (status === 200) {
         if (file.length > 0) {
           saveImage(param);
@@ -215,7 +215,7 @@ function Profile() {
           )}
 
           <div>
-            <div>
+            {/* <div>
               <h2 className="text-white mt-5 mb-3">Servicios Creados</h2>
               <table className="table table-dark table-striped">
                 <thead>
@@ -225,9 +225,9 @@ function Profile() {
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody> */}
                   {/* Ejemplo de fila */}
-                  <tr>
+                  {/* <tr>
                     <td>Servicio Ejemplo</td>
                     <td>2025-06-14</td>
                     <td>
@@ -241,9 +241,9 @@ function Profile() {
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div>
-            <h2 className="text-white mt-5 mb-3">Mis Favoritos</h2>
+            </div> */}
+            {/* <div>
+              <h2 className="text-white mt-5 mb-3">Mis Favoritos</h2>
               <table className="table table-dark table-striped">
                 <thead>
                   <tr>
@@ -251,77 +251,77 @@ function Profile() {
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody> */}
                   {/* Ejemplo de fila */}
-                  <tr>
+                 {/*  <tr>
                     <td>Servicio Ejemplo</td>
                     <td>Insertar el icono</td>
                   </tr>
                 </tbody>
               </table>
+            </div> */}
+            <div className="profile-form-container">
+              <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
+              {token ?
+                <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Nombre de su servicio</Form.Label>
+                    <Form.Control type="text" name="name" placeholder="Nombre del servicio"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Describe tu servicio.</Form.Label>
+                    <Form.Control type="textarea" name="description" placeholder="Descripcion"
+                      value={formData.description}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <SplitButton
+                      key='Info'
+                      id={`dropdown-split-variants-info`}
+                      variant='info'
+                      title={category}
+                      onSelect={handleSelect}
+                    >
+                      {categorys.map((option, key) => (
+                        <>
+                          <Dropdown.Divider />
+                          <Dropdown.Item key={key} eventKey={option.texto}>{option.texto}</Dropdown.Item>
+                        </>
+                      ))}
+                    </SplitButton>
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>imagenes de su servicio</Form.Label>
+                    {isUpdate ?
+                      <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                        multiple
+                        onChange={handleFileChange} />
+                      :
+                      <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                        multiple
+                        onChange={handleFileChange}
+                        value={file}
+                        required />
+                    }
+                  </Form.Group>
+                  <div className="d-flex justify-content-center">
+                    <Button className="profile-submit-button" type="submit">
+                      {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
+                    </Button>
+                  </div>
+                </Form>
+
+                :
+                <h1>Para crear un servicio debes estar registrado</h1>}
             </div>
-          <div className="profile-form-container">
-            <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
-            {token ?
-              <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Nombre de su servicio</Form.Label>
-                  <Form.Control type="text" name="name" placeholder="Nombre del servicio"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Describe tu servicio.</Form.Label>
-                  <Form.Control type="textarea" name="description" placeholder="Descripcion"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <SplitButton
-                    key='Info'
-                    id={`dropdown-split-variants-info`}
-                    variant='info'
-                    title={category}
-                    onSelect={handleSelect}
-                  >
-                    {categorys.map((option) => (
-                      <>
-                        <Dropdown.Divider />
-                        <Dropdown.Item eventKey={option.texto}>{option.texto}</Dropdown.Item>
-                      </>
-                    ))}
-                  </SplitButton>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>imagenes de su servicio</Form.Label>
-                  {isUpdate ?
-                    <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
-                      multiple
-                      onChange={handleFileChange} />
-                    :
-                    <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
-                      multiple
-                      onChange={handleFileChange}
-                      value={file}
-                      required />
-                  }
-                </Form.Group>
-                <div className="d-flex justify-content-center">
-                  <Button className="profile-submit-button" type="submit">
-                    {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
-                  </Button>
-                </div>
-              </Form> 
-            
-              :
-              <h1>Para crear un servicio debes estar registrado</h1>}
-          </div>
           </div>
         </>
 
