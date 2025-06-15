@@ -14,24 +14,26 @@ function Gallery({ title, text, image, buttonText, id, author, phone, stars, cat
           <ReactStars
           count={5}
           value={stars}
-          size={12}
-          color2={'#ffd700'} edit={false} />
+          size={19}
+          color2={'#ffd700'} 
+          edit={false} />
           {icon}
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-        <Card.Text>{`Autor: ${author}`}</Card.Text>
-        <Card.Text>{`Telefono: ${phone}`}</Card.Text>
-        <Card.Text>{text}</Card.Text>
-        <div className="gallery-buttons">
+        <Card.Text><strong>Autor:</strong> {author}</Card.Text>
+        <Card.Text><strong>Telefono:</strong> {phone}</Card.Text>
+        <Card.Text><strong>Descripción: </strong>{text}</Card.Text>
+       
         {!token ?
-          <Button as={Link} to={`/interaction/${id}`} variant="primary">{buttonText}</Button>
+         <div className="gallery-buttons">
+          <Button as={Link} to={`/interaction/${id}`} variant="primary" className="gallery-button">{buttonText}</Button>
+          </div>
           :
-          <>
-            <Button as={Link} to={`/interaction/${id}`} variant="primary">{buttonText}</Button>
-            <Button as={Link} to={`/interaction/${id}`} variant="primary">Comentar</Button>
-          </>
+          <div className="gallery-buttons">
+            <Button as={Link} to={`/interaction/${id}`} variant="primary" className="gallery-button">{buttonText}</Button>
+            <Button as={Link} to={`/interaction/${id}`} variant="primary" className="gallery-button">Comentar</Button>
+          </div>
         }
-        </div>
       </Card.Body>
     </Card>
   );

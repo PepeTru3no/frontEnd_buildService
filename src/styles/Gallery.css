@@ -20,12 +20,20 @@
 
 .gallery-buttons {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
-.gallery-buttons > .btn {
-  flex: 1;
-  text-align: center;
+.gallery-button{
+    background-color:  #0e2e3c !important;
+    border: 1px solid #0e2e3c !important;
+    opacity: 1;
+}
+
+.gallery-button:hover {
+    background-color: #14506d !important;
+    border-color: #14506d !important;
+    transition: background-color 0.3s ease, ;
 }
