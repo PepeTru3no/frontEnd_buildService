@@ -301,12 +301,12 @@ function Profile() {
           </div>
           </div>
           ) : (
-            <h2>Cargando tu contenido...</h2>
+            <h2 className="profile-title">Cargando tu contenido...</h2>
           )}
         </>
 
       ) : (
-        <h1>No autorizado</h1>
+        <h1 className="profile-title-unauthorized">Usuario no autorizado</h1>
       )}
     </div>
   );

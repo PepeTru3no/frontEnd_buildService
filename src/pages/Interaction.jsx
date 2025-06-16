@@ -145,21 +145,25 @@ function Interaction() {
                 :
                 ""
               }
-
             </Form>
           </div>
 
           {comentarios.length > 0 && (
             <div className="mt-4">
               <h5>Comentarios:</h5>
-              <ul>
+              <ul className="interaction-coment-list">
                 {comentarios.map((c) => (
-                  <li key={c.comment.id}>
-                      <hr/>
-                      <p variant='light'>Comentario de {`${c.user.name} ${c.user.last_name}`}:</p>
+                  <li 
+                    className="interaction-coment-item"
+                    key={c.comment.id}>
+                      <div className="interaction-coment-box">
+                      <p 
+                        className="interaction-coment-text" 
+                        variant='light'>
+                          {`${c.user.name} ${c.user.last_name}`}:
+                          </p>
                       <p>{c.comment.comment}</p>
-                      <hr/>
-                      <br/>
+                      </div>
                   </li>
                 ))}
               </ul>

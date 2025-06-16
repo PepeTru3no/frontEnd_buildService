@@ -69,7 +69,7 @@ function Publications() {
         Galeria de Publicaciones
       </h1>
       {!isLoad ?
-        <h1 className="publications-charge">Cargando Servicios....</h1>
+        <h1 className="publications-title">Cargando Servicios....</h1>
         :
         <Container className="my-4">
           <Row className="g-4 justify-content-center">
