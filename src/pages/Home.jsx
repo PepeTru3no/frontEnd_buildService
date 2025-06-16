@@ -3,6 +3,7 @@ import fondoPrincipal from '../assets/imgs/Fondo-principal.jpg';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ENDPOINT } from '../util/values';
+import '../styles/Home.css';
 
 function Home() {
   const navigate = useNavigate();
@@ -48,15 +49,7 @@ function Home() {
           <h1 style={{ marginBottom: '1rem' }}>¡Regístrate con nosotros!</h1>
           <button
             onClick={() => navigate('/register')}
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '1rem',
-              backgroundColor: '#0e2e3c',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
+            className="home-button"
           >
             Regístrate ahora
           </button>
@@ -72,15 +65,7 @@ function Home() {
           <h1 style={{ marginBottom: '1rem' }}>¡Navega por nuestros servicios!</h1>
           <button
             onClick={() => navigate('/publications')}
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '1rem',
-              backgroundColor: '#0e2e3c',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
+            className="home-button"
           >
             Publicaciones
           </button>
@@ -160,13 +145,7 @@ function Home() {
               {item.texto}
               </p>
               <button 
-              style={{ 
-                backgroundColor: '#0e2e3c', 
-                color: 'white', 
-                border: 'none', 
-                padding: '0.5rem 1rem', 
-                borderRadius: '5px' 
-                }}>
+                className="home-button">
                 Ver más
               </button>
             </div>

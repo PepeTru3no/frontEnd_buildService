@@ -29,7 +29,9 @@ function navbar() {
               className="me-2"
               aria-label="Buscar"
             />
-            <Button variant="outline-primary">Buscar</Button>
+            <Button  
+              className="button-nav"
+              variant="outline-primary">Buscar</Button>
           </Form>
           {!token ?
             <Nav className="ms-auto d-flex align-items-center">
