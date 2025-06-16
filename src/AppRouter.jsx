@@ -8,7 +8,9 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Servicios from "./pages/Servicios";
 import Profile from "./pages/Profile";
+import Configuration from "./pages/Configuration";
 import Logout from "./pages/Logout";
+
 
 function AppRouter() {
   //const token = localStorage.getItem('token');
@@ -23,6 +25,7 @@ function AppRouter() {
           <Route path="publications" element={<Publications />} />
           <Route path="register" element={<Register />} />
           <Route path="servicios" element={<Servicios />} />
+          <Route path="configuration" element={<Configuration />} />
           <Route path="logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
         </Route>

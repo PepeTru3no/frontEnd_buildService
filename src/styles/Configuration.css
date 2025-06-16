@@ -1,0 +1,8 @@
+.configuration-background {
+  background-image: url('../imgs/Fondo-Configuration.webp');
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
