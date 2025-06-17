@@ -5,6 +5,7 @@ import { Button, Dropdown, Form, SplitButton } from "react-bootstrap";
 import { ENDPOINT } from "../util/values";
 import '../styles/Profile.css';
 import ProfileOptions from "../components/ProfileOptions";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { usuario } = useContext(AuthContext);
@@ -205,6 +206,7 @@ function Profile() {
             Bienvenido, 
             {usuario.name.toUpperCase()}
           </p>
+          <Button as={Link} to="/configuration" variant="primary" className="profile-submit-button">Editar Perfil</Button>
           {isLoad ? (
             <div className="profile-content">
             <div className="profile-left-column">
