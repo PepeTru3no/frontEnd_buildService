@@ -56,14 +56,12 @@ function navbar() {
                   Perfil
                 </Button>
                 <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
-                <Nav.Link as={Link} to="/configuration">Configuración</Nav.Link>
                 <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
               </div>
 
               <div className="d-lg-none w-100">
                 <Nav.Link as={Link} to="/profile">Perfil</Nav.Link >
                 <Nav.Link as={Link} to="/publications">Servicios</Nav.Link>
-                <Nav.Link as={Link} to="/configuration">Configuración</Nav.Link>
                 <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
               </div>
             </Nav>
