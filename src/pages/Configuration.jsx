@@ -10,7 +10,7 @@ import { ENDPOINT } from '../util/values';
 import { PencilFill } from 'react-bootstrap-icons';
 
 function Configuration() {
-  const { usuario, setUsuario } = useContext(AuthContext);  
+  const { usuario, setUsuario } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: usuario.name || "",
     last_name: usuario.last_name || "",
@@ -60,11 +60,11 @@ function Configuration() {
             username: formData.username,
             phone: formData.phone,
             stars: usuario.stars,
-            image:usuario.image
+            image: usuario.image
           })
           setIsEdit(true);
         }
-        
+
       })
       .catch((error) => {
         console.log(error);
@@ -75,8 +75,8 @@ function Configuration() {
 
   const saveImage = (id) => {
     const formD = new FormData();
-      formD.append("file", file[0]);
-    
+    formD.append("file", file[0]);
+
     axios.post(`${ENDPOINT}/images/user/${id}`, formD, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -94,7 +94,7 @@ function Configuration() {
           username: formData.username,
           phone: formData.phone,
           stars: usuario.stars,
-          image:data.image.sample_image
+          image: data.image.sample_image
         })
         setIsEdit(true);
       })
@@ -211,19 +211,17 @@ function Configuration() {
                   onChange={handleFileChange}
                 />
               </Form.Group>
+              <div className="d-flex justify-content-center">
+                <Button className="register-button"
+                  type="submit"
+                >
+                  Guardar cambios
+                </Button>
+              </div>
             </>
             :
             ""
           }
-
-
-          <div className="d-flex justify-content-center">
-            <Button className="register-button"
-              type="submit"
-            >
-              Guardar cambios
-            </Button>
-          </div>
         </Form>
       </div>
     </div>
