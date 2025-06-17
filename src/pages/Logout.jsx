@@ -9,7 +9,7 @@ const Logout = () => {
     const {setToken}= useContext(TokenContext); 
     useEffect(()=>{
         const logout=()=>{
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             setUsuario('');
             setToken('')
             navigate('/');

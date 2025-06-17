@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import Gallery from '../components/Gallery';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form, ListGroup, FormControl, Button, SplitButton, Dropdown, FormGroup, CloseButton } from 'react-bootstrap';
 import axios from 'axios';
 import Paginator from '../components/Pagination';
 import { ENDPOINT } from '../util/values';
@@ -13,13 +13,18 @@ function Publications() {
   const [servicios, setServicios] = useState();
   const [count, setCount] = useState();
   const [isLoad, setIsLoad] = useState(false);
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
+  const [category, setCategory] = useState();
+  const [order, setOrder] = useState('id_ASC');
   const { token } = useContext(TokenContext);
   const { usuario } = useContext(AuthContext);
+  const [search, setSearch] = useState('');
   useEffect(() => {
-    const us_id=usuario ? `&user_id=${usuario.id}`: '';
-    const queryParams = `?limit=${limit}&page=${page}${us_id}`;
+    const us_id = usuario ? `&user_id=${usuario.id}` : '';
+    const cat = category ? `&category=${category}` : "";
+    const seek = search ? `&search=${search}` : "";
+    const queryParams = `?limit=${limit}&page=${page}&order=${order}${us_id}${cat}${seek}`;
     axios
       .get(`${ENDPOINT}/services${queryParams}`)
       .then(({ data }) => {
@@ -30,75 +35,206 @@ function Publications() {
       .catch((error) => {
         console.error("Error al cargar servicios:", error);
       });
-  }, [page, isLoad]);
+  }, [page, isLoad, category, order, limit, search]);
 
+  const categorys = [
+    {
+      value: 'fontaneria',
+      texto: 'Fontanería'
+    },
+    {
+      value: 'electricidad',
+      texto: 'Electricidad'
+    },
+    {
+      value: 'limpieza',
+      texto: 'Limpieza'
+    },
+    {
+      value: 'construccion y montaje',
+      texto: 'Construcción y montaje'
+    },
+  ];
+  const orders = [
+    {
+      texto: 'Peor calificados',
+      value: 'stars_DESC'
+    },
+    {
+      texto: 'Mejor calificados',
+      value: 'stars_ASC'
+    }
+  ];
   const addFavorite = (service_id) => {
-    const data={
+    const data = {
       user_id: usuario.id,
       service_id
     }
-      axios.post(`${ENDPOINT}/favorites`, data)
-      .then(({data})=>{
-        if(data){
+    axios.post(`${ENDPOINT}/favorites`, data)
+      .then(({ data }) => {
+        if (data) {
           alert("Servicio agregado a favoritos");
-        }  
-        setIsLoad(false); 
+        }
+        setIsLoad(false);
       })
-      .catch(err=>{
+      .catch(err => {
         console.log(err.message);
       });
   }
 
   const deleteFavorite = (service_id) => {
-    const queryParams=`?user_id=${usuario.id}&service_id=${service_id}`
+    const queryParams = `?user_id=${usuario.id}&service_id=${service_id}`
     axios.delete(`${ENDPOINT}/favorites${queryParams}`)
-      .then(({data})=>{
-        if(data.message=== 'eliminado'){
+      .then(({ data }) => {
+        if (data.message === 'eliminado') {
           alert(`Servicio ${data.message} de favoritos`);
-        } 
-        setIsLoad(false); 
+        }
+        setIsLoad(false);
       })
-      .catch(err=>{
+      .catch(err => {
         console.log(err.message);
       });
   }
-
+  const handleChange = (e) => {
+    if (e.target.value.length >= 3) {
+      setSearch(e.target.value)
+    } else {
+      setSearch('');
+    }
+  };
   return (
     <div className="publications-background">
       <h1 className="publications-title">
         Galeria de Publicaciones
       </h1>
+      <Form className="d-lg-flex mx-auto w-100">
+        <FormControl
+          type="search"
+          placeholder="Buscar"
+          className="me-2 w-50"
+          aria-label="Buscar"
+          onChange={handleChange}
+        />
+        <Button
+          className="button-nav"
+          variant="outline-primary">Buscar</Button>
+        <Form.Group className="mb-3">
+          <SplitButton
+            key='Info'
+            id={`dropdown-split-variants-info`}
+            variant='info'
+            title='Todos'
+            onSelect={(e) => setCategory(e)}
+            size='sm'
+          >
+            {categorys.map((option, key) => (
+              <>
+                <Dropdown.Divider />
+                <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
+              </>
+            ))}
+          </SplitButton>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <SplitButton
+            key='Info'
+            id={`dropdown-split-variants-info`}
+            variant='info'
+            title="Orden"
+            onSelect={(e) => setOrder(e)}
+            size='sm'
+          >
+            {orders.map((option, key) => (
+              <>
+                <Dropdown.Divider />
+                <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
+              </>
+            ))}
+          </SplitButton>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <SplitButton
+            key='Info'
+            id={`dropdown-split-variants-info`}
+            variant='info'
+            title="Resultado por paginas"
+            onSelect={(e) => setLimit(e)}
+            size='sm'
+          >
+            {[6, 7, 8, 9, 10].map((option, key) => (
+              <>
+                <Dropdown.Divider />
+                <Dropdown.Item key={key} eventKey={option}>{option}</Dropdown.Item>
+              </>
+            ))}
+          </SplitButton>
+        </Form.Group>
+        <FormGroup className='mb-3'>
+          <table>
+            <tr>
+              <th>Filtros</th>
+              {category ?
+                <th>
+                  <p className='button-nav'>{category}<CloseButton onClick={() => setCategory('')} /></p>
+                </th>
+                :
+                ''
+              }
+              {order !== 'id_ASC' ?
+                <th>
+                  <p className='button-nav'>Ordenado<CloseButton onClick={() => setOrder('id_ASC')} /></p>
+                </th>
+                :
+                ''
+              }
+              {limit !== 5 ?
+                <th>
+                  <p className='button-nav'>{`${limit} registros p/p`}<CloseButton onClick={() => setLimit(5)} /></p>
+                </th>
+                :
+                ''
+              }
+            </tr>
+          </table>
+
+        </FormGroup>
+      </Form>
       {!isLoad ?
         <h1 className="publications-title">Cargando Servicios....</h1>
         :
         <Container className="my-4">
           <Row className="g-4 justify-content-center">
-            {servicios.map((servicio, index) => (
+            {!count ?
+              <h1>No existen registros para esta busqueda</h1>
+              :
+              servicios.map((servicio, index) => (
 
-              <Col key={index} xs={12} sm={6} md={4}>
-                <Gallery
-                  title={servicio.name}
-                  text={servicio.description}
-                  image={`${ENDPOINT}/uploads/${(servicio.images.length !== 0) ? servicio.images[0].sample_image : ""}`}
-                  buttonText={'Ver mas...'}
-                  id={servicio.id}
-                  author={`${servicio.user.name} ${servicio.user.last_name}`}
-                  phone={servicio.user.phone}
-                  stars={servicio.stars}
-                  category={servicio.category}
-                  icon={token ? servicio.isFav ?
-                    <>
-                      <BookmarkCheckFill size={18} onClick={() => deleteFavorite(servicio.id)} />
-                    </>
-                    :
-                    <BookmarkPlus size={18} onClick={() => addFavorite(servicio.id)} />
-                    : ""}
-                />
-              </Col>
-            ))}
+                <Col key={index} xs={12} sm={6} md={4}>
+                  <Gallery
+                    title={servicio.name}
+                    text={servicio.description}
+                    image={`${ENDPOINT}/uploads/${(servicio.images.length !== 0) ? servicio.images[0].sample_image : ""}`}
+                    buttonText={'Ver mas...'}
+                    id={servicio.id}
+                    author={`${servicio.user.name} ${servicio.user.last_name}`}
+                    phone={servicio.user.phone}
+                    stars={servicio.stars}
+                    category={servicio.category}
+                    icon={token ? servicio.isFav ?
+                      <>
+                        <BookmarkCheckFill size={18} onClick={() => deleteFavorite(servicio.id)} />
+                      </>
+                      :
+                      <BookmarkPlus size={18} onClick={() => addFavorite(servicio.id)} />
+                      : ""}
+                  />
+                </Col>
+              ))
+            }
           </Row>
           <Paginator count={count} limit={limit} page={page} setPage={setPage} />
         </Container>
+
       }
 
     </div>

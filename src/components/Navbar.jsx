@@ -22,7 +22,7 @@ function navbar() {
 
         <Navbar.Collapse id="navbarResponsive">
 
-          <Form className="d-none d-lg-flex mx-auto w-50">
+          {/* <Form className="d-none d-lg-flex mx-auto w-50">
             <FormControl
               type="search"
               placeholder="Buscar"
@@ -32,7 +32,7 @@ function navbar() {
             <Button  
               className="button-nav"
               variant="outline-primary">Buscar</Button>
-          </Form>
+          </Form> */}
           {!token ?
             <Nav className="ms-auto d-flex align-items-center">
               <div className="d-none d-lg-flex">

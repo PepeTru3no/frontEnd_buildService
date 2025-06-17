@@ -7,7 +7,6 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { ENDPOINT } from '../util/values';
-import { useNavigate } from 'react-router-dom';
 import { PencilFill } from 'react-bootstrap-icons';
 
 function Configuration() {
@@ -26,8 +25,7 @@ function Configuration() {
 
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
-  };
-  const navigate = useNavigate();
+  }
 
   const handleChange = (e) => {
     setFormData((prev) => ({

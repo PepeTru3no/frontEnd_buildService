@@ -18,7 +18,7 @@ function Profile() {
   const [favServices, setFavServices] = useState();
   const [isLoad, setIsLoad] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   useEffect(() => {
 
     const getData = async () => {

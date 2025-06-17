@@ -7,7 +7,7 @@ import '../styles/Home.css';
 
 function Home() {
   const navigate = useNavigate();
-  const token= localStorage.getItem('token');
+  const token= sessionStorage.getItem('token');
   const [comments, setComments]= useState();
   const [isLoad, setIsLoad]= useState(false);
 

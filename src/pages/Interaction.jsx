@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import perfil from '../assets/imgs/Perfil.png';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -19,7 +18,7 @@ function Interaction() {
   const [stars, setStars] = useState(); 
   const { usuario } = useContext(AuthContext);
   const { id } = useParams();
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   useEffect(() => {
     axios.get(`${ENDPOINT}/services/${id}`)
       .then(({ data }) => {
@@ -86,7 +85,7 @@ function Interaction() {
     <div className="interaction-background">
       <div className="interaction-card" >
         <Card>
-          <Card.Img className="interaction-img" variant="top" src={perfil} />
+          <Card.Img className="interaction-img" variant="top" src={`${ENDPOINT}/uploads/${(usuario.image) ? usuario.image : ""}`} />
           <Card.Body />
           <ListGroup className="list-group-flush">
             {usuario && token ?
