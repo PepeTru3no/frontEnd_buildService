@@ -122,10 +122,11 @@ function Publications() {
           <SplitButton
             key='Info'
             id={`dropdown-split-variants-info`}
-            variant='info'
-            title='Todos'
+            variant='custom'
+            title='Categorias'
             onSelect={(e) => setCategory(e)}
             size='sm'
+            className="publications-filters"
           >
             {categorys.map((option, key) => (
               <>
@@ -139,10 +140,11 @@ function Publications() {
           <SplitButton
             key='Info'
             id={`dropdown-split-variants-info`}
-            variant='info'
-            title="Orden"
+            variant='custom'
+            title="Ordenado Por"
             onSelect={(e) => setOrder(e)}
             size='sm'
+            className="publications-filters"
           >
             {orders.map((option, key) => (
               <>
@@ -152,14 +154,15 @@ function Publications() {
             ))}
           </SplitButton>
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3 publication-filters">
           <SplitButton
             key='Info'
             id={`dropdown-split-variants-info`}
-            variant='info'
-            title="Resultado por paginas"
+            variant='custom'
+            title="Cantidad por pagina"
             onSelect={(e) => setLimit(e)}
             size='sm'
+            className="publications-filters"
           >
             {[6, 7, 8, 9, 10].map((option, key) => (
               <>

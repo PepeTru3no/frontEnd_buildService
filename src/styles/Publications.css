@@ -20,7 +20,19 @@
   color: white;
 }
 
-.publications-charge{
-    color: white;
-    margin-top: 8rem;
+.publications-filters * {
+  background-color: #0e2e3c;
+  color: white !important;
+  fill: white !important;
+}
+
+.publications-filters:hover *,
+.publications-filters:focus * {
+  background-color: #14506d !important;
+  color: white !important;
+  fill: white !important;
+}
+
+.publications-filters.show * {
+  background-color: #0e2e3c !important;
 }

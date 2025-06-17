@@ -255,9 +255,10 @@ function Profile() {
                     <SplitButton
                       key='Info'
                       id={`dropdown-split-variants-info`}
-                      variant='info'
+                      variant='custom'
                       title={category}
                       onSelect={handleSelect}
+                      className="profile-filter"
                     >
                       {categorys.map((option, key) => (
                         <>
