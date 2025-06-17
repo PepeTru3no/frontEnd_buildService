@@ -107,92 +107,96 @@ function Publications() {
       <h1 className="publications-title">
         Galeria de Publicaciones
       </h1>
-      <Form className="d-lg-flex mx-auto w-100">
-        <FormControl
-          type="search"
-          placeholder="Buscar"
-          className="me-2 w-50"
-          aria-label="Buscar"
-          onChange={handleChange}
-        />
-        <Button
-          className="button-nav"
-          variant="outline-primary">Buscar</Button>
-        <Form.Group className="mb-3">
-          <SplitButton
-            key='Info'
-            id={`dropdown-split-variants-info`}
-            variant='custom'
-            title='Categorias'
-            onSelect={(e) => setCategory(e)}
-            size='sm'
-            className="publications-filters"
-          >
-            {categorys.map((option, key) => (
-              <>
-                <Dropdown.Divider />
-                <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
-              </>
-            ))}
-          </SplitButton>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <SplitButton
-            key='Info'
-            id={`dropdown-split-variants-info`}
-            variant='custom'
-            title="Ordenado Por"
-            onSelect={(e) => setOrder(e)}
-            size='sm'
-            className="publications-filters"
-          >
-            {orders.map((option, key) => (
-              <>
-                <Dropdown.Divider />
-                <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
-              </>
-            ))}
-          </SplitButton>
-        </Form.Group>
-        <Form.Group className="mb-3 publication-filters">
-          <SplitButton
-            key='Info'
-            id={`dropdown-split-variants-info`}
-            variant='custom'
-            title="Cantidad por pagina"
-            onSelect={(e) => setLimit(e)}
-            size='sm'
-            className="publications-filters"
-          >
-            {[6, 7, 8, 9, 10].map((option, key) => (
-              <>
-                <Dropdown.Divider />
-                <Dropdown.Item key={key} eventKey={option}>{option}</Dropdown.Item>
-              </>
-            ))}
-          </SplitButton>
-        </Form.Group>
-        <FormGroup className='mb-3'>
-          <table>
-            <tr>
-              <th>Filtros</th>
+      <Form className="publications-form">
+        <div className='publications-search w-100'>
+          <FormControl
+            type="search"
+            placeholder="Buscar"
+            className="me-2 w-50"
+            aria-label="Buscar"
+            onChange={handleChange}
+          />
+          <Button
+            className="button-nav"
+            variant="outline-primary">Buscar</Button>
+        </div>
+        <div className='publications-filters-group'>
+          <Form.Group className="mb-3">
+            <SplitButton
+              key='Info'
+              id={`dropdown-split-variants-info`}
+              variant='custom'
+              title='Categorias'
+              onSelect={(e) => setCategory(e)}
+              size='sm'
+              className="publications-filters"
+            >
+              {categorys.map((option, key) => (
+                <>
+                  <Dropdown.Divider />
+                  <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
+                </>
+              ))}
+            </SplitButton>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <SplitButton
+              key='Info'
+              id={`dropdown-split-variants-info`}
+              variant='custom'
+              title="Ordenado Por"
+              onSelect={(e) => setOrder(e)}
+              size='sm'
+              className="publications-filters"
+            >
+              {orders.map((option, key) => (
+                <>
+                  <Dropdown.Divider />
+                  <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
+                </>
+              ))}
+            </SplitButton>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <SplitButton
+              key='Info'
+              id={`dropdown-split-variants-info`}
+              variant='custom'
+              title="Cantidad por pagina"
+              onSelect={(e) => setLimit(e)}
+              size='sm'
+              className="publications-filters"
+            >
+              {[6, 7, 8, 9, 10].map((option, key) => (
+                <>
+                  <Dropdown.Divider />
+                  <Dropdown.Item key={key} eventKey={option}>{option}</Dropdown.Item>
+                </>
+              ))}
+            </SplitButton>
+          </Form.Group>
+        </div>
+        <FormGroup className='mb-3 w-100'>
+          <table className='publications-active-filters'>
+            <tr className='publications-table-filters'>
+              <th >Filtros: </th>
               {category ?
                 <th>
-                  <p className='button-nav'>{category}<CloseButton onClick={() => setCategory('')} /></p>
+                  <p className='button-nav'>{category}<CloseButton className="publications-close-button" onClick={() => setCategory('')} /></p>
                 </th>
                 :
                 ''
               }
               {order !== 'id_ASC' ?
                 <th>
-                  <p className='button-nav'>Ordenado<CloseButton onClick={() => setOrder('id_ASC')} /></p>
+                  <p className='button-nav'>Ordenado<CloseButton className="publications-close-button" onClick={() => setOrder('id_ASC')} /></p>
                 </th>
                 :
                 ''
               }
               {limit !== 5 ?
                 <th>
-                  <p className='button-nav'>{`${limit} registros p/p`}<CloseButton onClick={() => setLimit(5)} /></p>
+                  <p className='button-nav'>{`${limit} registros p/p`}<CloseButton className="publications-close-button" onClick={() => setLimit(5)} /></p>
                 </th>
                 :
                 ''
