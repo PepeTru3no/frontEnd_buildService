@@ -3,35 +3,137 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import '../styles/Configuration.css';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import { ENDPOINT } from '../util/values';
+import { useNavigate } from 'react-router-dom';
+import { PencilFill } from 'react-bootstrap-icons';
 
 function Configuration() {
-    return(
-        <div className="configuration-background">
-            <div className="interaction-card" >
-                    <Card>
-                      <Card.Img className="interaction-img" variant="top" src="aquifotodeperfil" />
-                      <Card.Body />
-                      <ListGroup className="list-group-flush">
-                            <ListGroup.Item>Luis Vergara</ListGroup.Item>
-                            <ListGroup.Item>998765432</ListGroup.Item>
-                            <ListGroup.Item>luis.vergara.catalan@gmail.com</ListGroup.Item>
-                      </ListGroup>
-                    </Card>
-                  </div>
-            <div className="register-form">
+  const { usuario, setUsuario } = useContext(AuthContext);  
+  const [formData, setFormData] = useState({
+    name: usuario.name || "",
+    last_name: usuario.last_name || "",
+    age: usuario.age || 0,
+    email: usuario.email || "",
+    phone: usuario.phone || "",
+    username: usuario.username || "",
+    password: "",
+  });
+  const [file, setFile] = useState([]);
+  const [isEdit, setIsEdit] = useState(true);
+
+  const handleFileChange = (e) => {
+    setFile([...e.target.files]);
+  };
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.password !== "") {
+      if (!confirm("Va a modificar su password, desae continuar?")) {
+        alert("Operacion cancelada");
+        return;
+      }
+    }
+    axios.put(`${ENDPOINT}/users/up/${usuario.id}`, formData)
+      .then((response) => {
+        console.log(response);
+        if (file.length > 0) {
+          saveImage(usuario.id);
+        } else {
+          console.log("sin archivos");
+          setUsuario({
+            id: usuario.id,
+            name: formData.name,
+            last_name: formData.last_name,
+            email: formData.email,
+            age: formData.age,
+            registration_date: usuario.registration_date,
+            state: usuario.state,
+            username: formData.username,
+            phone: formData.phone,
+            stars: usuario.stars,
+            image:usuario.image
+          })
+          setIsEdit(true);
+        }
+        
+      })
+      .catch((error) => {
+        console.log(error);
+        return;
+      })
+
+  };
+
+  const saveImage = (id) => {
+    const formD = new FormData();
+      formD.append("file", file[0]);
+    
+    axios.post(`${ENDPOINT}/images/user/${id}`, formD, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then(({ data }) => {
+        setUsuario({
+          id: usuario.id,
+          name: formData.name,
+          last_name: formData.last_name,
+          email: formData.email,
+          age: formData.age,
+          registration_date: usuario.registration_date,
+          state: usuario.state,
+          username: formData.username,
+          phone: formData.phone,
+          stars: usuario.stars,
+          image:data.image.sample_image
+        })
+        setIsEdit(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        return "";
+      })
+  }
+  console.log(usuario);
+  return (
+    <div className="configuration-background">
+      <div className="interaction-card" >
+        <Card>
+          <Card.Img className="interaction-img" variant="top"
+            src={`${ENDPOINT}/uploads/${(usuario.image) ? usuario.image : ""}`} />
+          <ListGroup className="list-group-flush">
+            <ListGroup.Item>{`${usuario.name || ""} ${usuario.last_name}`}</ListGroup.Item>
+            <ListGroup.Item>{usuario.phone || ""}</ListGroup.Item>
+            <ListGroup.Item>{usuario.email || ""}</ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </div>
+      <div className="register-form">
         <h2 className="register-title">
-          Editar Cuenta
+          Informacion del Usuario <PencilFill title="Editar" size={12} onClick={() => setIsEdit(false)} />
         </h2>
 
-        <Form onSubmit="">
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Control
               type="text"
               name="name"
               placeholder="Nombre"
-              value=""
-              onChange=""
+              value={formData.name}
+              onChange={handleChange}
               required
+              readOnly={isEdit}
             />
           </Form.Group>
 
@@ -40,9 +142,10 @@ function Configuration() {
               type="text"
               name="last_name"
               placeholder="Apellidos"
-              value=""
-              onChange=""
+              value={formData.last_name}
+              onChange={handleChange}
               required
+              readOnly={isEdit}
             />
           </Form.Group>
 
@@ -51,10 +154,11 @@ function Configuration() {
               type="number"
               name="age"
               placeholder="Edad"
-              value=""
-              onChange=""
+              value={formData.age}
+              onChange={handleChange}
               required
               min={18}
+              readOnly={isEdit}
             />
           </Form.Group>
 
@@ -63,9 +167,10 @@ function Configuration() {
               type="text"
               name="phone"
               placeholder="Telefono"
-              value=""
-              onChange=""
+              value={formData.phone}
+              onChange={handleChange}
               required
+              readOnly={isEdit}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -73,9 +178,10 @@ function Configuration() {
               type="text"
               name="username"
               placeholder="Nombre de usuario"
-              value=""
-              onChange=""
+              value={formData.username}
+              onChange={handleChange}
               required
+              readOnly={isEdit}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -83,47 +189,47 @@ function Configuration() {
               type="text"
               name="email"
               placeholder="Correo electronico"
-              value=""
-              onChange=""
+              value={formData.email}
+              onChange={handleChange}
               required
+              readOnly={isEdit}
             />
           </Form.Group>
+          {!isEdit ?
+            <>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  readOnly={isEdit}
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control
-              type="password"
-              name="password"
-              placeholder="Password"
-              value=""
-              onChange=""
-              required
-            />
-          </Form.Group>
-          <Form.Group 
-            className="mb-3" 
-            controlId="formBasicPassword">
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+                  onChange={handleFileChange}
+                />
+              </Form.Group>
+            </>
+            :
+            ""
+          }
 
-              <Form.Control 
-                type="file" 
-                name="file" 
-                placeholder="Agrege sus archivos"
-                multiple
-                onChange=""
-                required />
-            </Form.Group>
 
           <div className="d-flex justify-content-center">
-            <Button 
-                className="register-button"
-                type="submit"
+            <Button className="register-button"
+              type="submit"
             >
               Guardar cambios
             </Button>
           </div>
         </Form>
       </div>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default Configuration;

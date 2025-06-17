@@ -33,7 +33,10 @@ function Login() {
     axios
       .post(`${ENDPOINT}/users/login`, formData)
       .then(({ data }) => {
-        setUsuario(data.user); // ✅ guardamos como objeto
+        let user =data.user;
+        const image= data.image;
+        user.image= image?image.sample_image :"";
+        setUsuario(user); // ✅ guardamos como objeto
         localStorage.setItem("token", data.token); // ✅ persistimos el token
         setToken(data.token); // ✅ actualizamos el contexto
         navigate("/publications"); // ✅ redirige a otra ruta (perfil o publicaciones)
