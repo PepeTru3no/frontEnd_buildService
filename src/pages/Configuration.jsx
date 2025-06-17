@@ -99,16 +99,23 @@ function Configuration() {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control type="file" name="file" placeholder="Agrege sus archivos"
+          <Form.Group 
+            className="mb-3" 
+            controlId="formBasicPassword">
+
+              <Form.Control 
+                type="file" 
+                name="file" 
+                placeholder="Agrege sus archivos"
                 multiple
                 onChange=""
                 required />
             </Form.Group>
 
           <div className="d-flex justify-content-center">
-            <Button className="register-button"
-              type="submit"
+            <Button 
+                className="register-button"
+                type="submit"
             >
               Guardar cambios
             </Button>
