@@ -202,11 +202,18 @@ function Profile() {
       <h1 className="profile-title">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
+        <div className="profile-header">
           <p className="profile-form-title">
-            Bienvenido, 
-            {usuario.name.toUpperCase()}
+            Bienvenido,
           </p>
-          <Button as={Link} to="/configuration" variant="primary" className="profile-submit-button">Editar Perfil</Button>
+          <Button 
+            as={Link} to="/configuration" 
+            variant="primary"  
+            className="profile-submit-button"
+            title="Editar Perfil"> 
+            {usuario.name.toUpperCase()}
+          </Button>
+        </div>
           {isLoad ? (
             <div className="profile-content">
             <div className="profile-left-column">
