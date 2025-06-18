@@ -179,24 +179,24 @@ function Publications() {
         <FormGroup className='mb-3 w-100'>
           <table className='publications-active-filters'>
             <tr className='publications-table-filters'>
-              <th >Filtros: </th>
+              <th className='publications-title-table'>Filtros:</th>
               {category ?
                 <th>
-                  <p className='button-nav'>{category}<CloseButton className="publications-close-button" onClick={() => setCategory('')} /></p>
+                  <p className='publications-button'>&nbsp;{category}<CloseButton className="publications-close-button" onClick={() => setCategory('')} /></p>
                 </th>
                 :
                 ''
               }
               {order !== 'id_ASC' ?
                 <th>
-                  <p className='button-nav'>Ordenado<CloseButton className="publications-close-button" onClick={() => setOrder('id_ASC')} /></p>
+                  <p className='publications-button'>&nbsp;Ordenado<CloseButton className="publications-close-button" onClick={() => setOrder('id_ASC')} /></p>
                 </th>
                 :
                 ''
               }
               {limit !== 5 ?
                 <th>
-                  <p className='button-nav'>{`${limit} registros p/p`}<CloseButton className="publications-close-button" onClick={() => setLimit(5)} /></p>
+                  <p className='publications-button'>&nbsp;{`${limit} registros p/p`}<CloseButton className="publications-close-button" onClick={() => setLimit(5)} /></p>
                 </th>
                 :
                 ''
@@ -212,7 +212,7 @@ function Publications() {
         <Container className="my-4">
           <Row className="g-4 justify-content-center">
             {!count ?
-              <h1>No existen registros para esta busqueda</h1>
+              <h1 className="publications-title">No existen registros para esta busqueda</h1>
               :
               servicios.map((servicio, index) => (
 
