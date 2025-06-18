@@ -9,7 +9,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   padding: 2rem 2rem 2rem;
-  gap: 30rem;
+  /* gap: 30rem; */
 }
 
 .interaction-card {

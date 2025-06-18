@@ -23,6 +23,7 @@ function AppRouter() {
           <Route path="interaction/:id" element={<Interaction />} />
           <Route path="login" element={<Login />} />
           <Route path="publications" element={<Publications />} />
+          <Route path="publications/:categoria" element={<Publications />} />
           <Route path="register" element={<Register />} />
           <Route path="servicios" element={<Servicios />} />
           <Route path="configuration" element={<Configuration />} />

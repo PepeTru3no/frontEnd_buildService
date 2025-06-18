@@ -8,6 +8,7 @@ import '../styles/Publications.css';
 import { BookmarkPlus, BookmarkCheckFill } from 'react-bootstrap-icons';
 import { TokenContext } from "../context/TokenContext";
 import { AuthContext } from '../context/AuthContext';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Publications() {
   const [servicios, setServicios] = useState();
@@ -20,9 +21,19 @@ function Publications() {
   const { token } = useContext(TokenContext);
   const { usuario } = useContext(AuthContext);
   const [search, setSearch] = useState('');
+  const {categoria}=useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     const us_id = usuario ? `&user_id=${usuario.id}` : '';
-    const cat = category ? `&category=${category}` : "";
+    let cat="";
+    if(category && !categoria){
+      cat=`&category=${category}`;
+    }else if(!category && categoria){
+      cat=`&category=${categoria}`;
+      setCategory(categoria);
+    }else if(category && categoria){
+      navigate('/publications');
+    }
     const seek = search ? `&search=${search}` : "";
     const queryParams = `?limit=${limit}&page=${page}&order=${order}${us_id}${cat}${seek}`;
     axios
@@ -102,6 +113,11 @@ function Publications() {
       setSearch('');
     }
   };
+
+  const setParam=()=>{
+    setCategory('');
+    navigate('/publications');
+  }
   return (
     <div className="publications-background">
       <h1 className="publications-title">
@@ -182,7 +198,7 @@ function Publications() {
               <th className='publications-title-table'>Filtros:</th>
               {category ?
                 <th>
-                  <p className='publications-button'>&nbsp;{category}<CloseButton className="publications-close-button" onClick={() => setCategory('')} /></p>
+                  <p className='publications-button'>&nbsp;{category}<CloseButton className="publications-close-button" onClick={() =>!categoria?setCategory(''):setParam()} /></p>
                 </th>
                 :
                 ''

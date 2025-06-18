@@ -5,7 +5,7 @@ import ReactStars from 'react-stars';
 import '../styles/Gallery.css';
 
 function Gallery({ title, text, image, buttonText, id, author, phone, stars, category, icon }) {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   return (
     <Card className="gallery-card">
       <Card.Img variant="top" src={image} />

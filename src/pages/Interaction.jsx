@@ -9,13 +9,15 @@ import { useParams } from 'react-router-dom';
 import ReactStars from 'react-stars';
 import { ENDPOINT } from '../util/values';
 import '../styles/Interaction.css';
+import { Carousel } from 'react-bootstrap';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
   const [comentarios, setComentarios] = useState([]);
   const [service, setService] = useState();
   const [isLoad, setIsLoad] = useState(false);
-  const [stars, setStars] = useState(); 
+  const [stars, setStars] = useState();
+  const [images, setImages] = useState();
   const { usuario } = useContext(AuthContext);
   const { id } = useParams();
   const token = sessionStorage.getItem('token');
@@ -25,8 +27,8 @@ function Interaction() {
         setService(data);
         setComentarios(data.comments);
         setStars(data.stars);
+        setImages(data.images);
         setIsLoad(true);
-        console.log(comentarios);
       })
       .catch(err => {
         console.log(err);
@@ -53,9 +55,9 @@ function Interaction() {
       )
         .then(({ data }) => {
           const commentAndUser = {
-            comment:data,
-            user:{name:usuario.name, last_name: usuario.last_name}
-        }
+            comment: data,
+            user: { name: usuario.name, last_name: usuario.last_name }
+          }
           setComentarios([...comentarios, commentAndUser]);
         })
         .catch(err => console.log(err));
@@ -85,7 +87,7 @@ function Interaction() {
     <div className="interaction-background">
       <div className="interaction-card" >
         <Card>
-          <Card.Img className="interaction-img" variant="top" src={`${ENDPOINT}/uploads/${(usuario.image) ? usuario.image : ""}`} />
+          <Card.Img className="interaction-img" variant="top" src={(usuario) ? `${ENDPOINT}/uploads/${usuario.image}` : "/imgs/Perfil.png"} />
           <Card.Body />
           <ListGroup className="list-group-flush">
             {usuario && token ?
@@ -107,68 +109,100 @@ function Interaction() {
         <div className="interaction-load">
           Cargando Servicio...
         </div>
-        : <div  className="interaction-form">
-          <div className="mb-4">
-            <Form onSubmit={handleSubmit}>
-              <p className="interaction-title-describe">{service.name}</p>
-              <p><ReactStars
-                count={5}
-                value={service.stars}
-                size={15}
-                color2={'#ffd700'} edit={false} /></p>
-              <p className="interaction-describe">
-                {service.description}
-              </p>
-              {token && usuario ?
-                <>
-                  <h5>Calificar Servicio:</h5>
-                  <ReactStars
-                    count={5}
-                    onChange={handleChangeStars}
-                    size={24}
-                    color2={'#ffd700'} />
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="textarea"
-                      placeholder="Escribe un comentario"
-                      value={comentario}
-                      onChange={(e) => setComentario(e.target.value)} />
-                  </Form.Group>
+        :
+        <>
+          <Carousel data-bs-theme="dark">
+            {images ?
+              images.map((image, key) => (
+                <Carousel.Item key={key}>
+                  <img
+                    className="w-100"
+                    src={`${ENDPOINT}/uploads/${image.sample_image}`}
+                    alt={image.sample_image}
+                  />
+                  <Carousel.Caption>
+                    <h5>{service.name}</h5>
+                    <p>{service.description}</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))
+              :
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="/imgs/Limpieza.png"
+                  alt="Sin imagenes para el servicio"
+                />
+                <Carousel.Caption>
+                  <h5>Imagen de muestra</h5>
+                  <p>Aun no se han cargado imagenes para este servicio</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+            }
+          </Carousel>
+          <div className="interaction-form">
+            <div className="mb-4">
+              <Form onSubmit={handleSubmit}>
+                <p className="interaction-title-describe">{service.name}</p>
+                <p><ReactStars
+                  count={5}
+                  value={service.stars}
+                  size={15}
+                  color2={'#ffd700'} edit={false} /></p>
+                <p className="interaction-describe">
+                  {service.description}
+                </p>
+                {token && usuario ?
+                  <>
+                    <h5>Calificar Servicio:</h5>
+                    <ReactStars
+                      count={5}
+                      onChange={handleChangeStars}
+                      size={24}
+                      color2={'#ffd700'} />
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="textarea"
+                        placeholder="Escribe un comentario"
+                        value={comentario}
+                        onChange={(e) => setComentario(e.target.value)} />
+                    </Form.Group>
 
-                  <div className="d-flex justify-content-center">
-                    <Button variant="primary" type="submit" className="interaction-button">
-                      Comentar
-                    </Button>
-                  </div>
-                </>
-                :
-                ""
-              }
-            </Form>
-          </div>
-
-          {comentarios.length > 0 && (
-            <div className="mt-4">
-              <h5>Comentarios:</h5>
-              <ul className="interaction-coment-list">
-                {comentarios.map((c) => (
-                  <li 
-                    className="interaction-coment-item"
-                    key={c.comment.id}>
-                      <div className="interaction-coment-box">
-                      <p 
-                        className="interaction-coment-text" 
-                        variant='light'>
-                          {`${c.user.name} ${c.user.last_name}`}:
-                          </p>
-                      <p>{c.comment.comment}</p>
-                      </div>
-                  </li>
-                ))}
-              </ul>
+                    <div className="d-flex justify-content-center">
+                      <Button variant="primary" type="submit" className="interaction-button">
+                        Comentar
+                      </Button>
+                    </div>
+                  </>
+                  :
+                  ""
+                }
+              </Form>
             </div>
-          )}
-        </div>}
+
+            {comentarios.length > 0 && (
+              <div className="mt-4">
+                <h5>Comentarios:</h5>
+                <ul className="interaction-coment-list">
+                  {comentarios.map((c) => (
+                    <li
+                      className="interaction-coment-item"
+                      key={c.comment.id}>
+                      <div className="interaction-coment-box">
+                        <p
+                          className="interaction-coment-text"
+                          variant='light'>
+                          {`${c.user.name} ${c.user.last_name}`}:
+                        </p>
+                        <p>{c.comment.comment}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </>}
     </div>
   );
 }
