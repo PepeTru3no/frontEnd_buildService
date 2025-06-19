@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import fondoPrincipal from '../assets/imgs/Fondo-principal.jpg';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ENDPOINT } from '../util/values';
@@ -24,29 +23,10 @@ function Home() {
   }, [])
   return (
     <div>
-      <div
-        style={{
-          backgroundImage: `url(${fondoPrincipal})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          height: '60vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'white',
-          position: 'relative',
-          textAlign: 'center',
-        }}
-      >
+      <div className="home-hero">
         {!token ?
-          <div
-            style={{
-              backgroundColor: 'rgba(0,0,0,0.6)',
-              padding: '2rem',
-              borderRadius: '10px',
-            }}
-          >
-            <h1 style={{ marginBottom: '1rem' }}>¡Regístrate con nosotros!</h1>
+          <div className="home-overlay">
+            <h1 className="home-overlay-title">¡Regístrate con nosotros!</h1>
             <button
               onClick={() => navigate('/register')}
               className="home-button"
@@ -55,14 +35,8 @@ function Home() {
             </button>
           </div>
           :
-          <div
-            style={{
-              backgroundColor: 'rgba(0,0,0,0.6)',
-              padding: '2rem',
-              borderRadius: '10px',
-            }}
-          >
-            <h1 style={{ marginBottom: '1rem' }}>¡Navega por nuestros servicios!</h1>
+          <div className="home-overlay">
+            <h1 className="home-overlay-title">¡Navega por nuestros servicios!</h1>
             <button
               onClick={() => navigate('/publications')}
               className="home-button"
@@ -73,17 +47,9 @@ function Home() {
         }
       </div>
 
-      <div style={{
-        padding: '2rem',
-        textAlign: 'center'
-      }}>
-        <h1>¿Cómo Funciona?</h1>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-          marginTop: '1.5rem'
-        }}>
+      <div className="home-section">
+        <h1 className="home-overlay-title">¿Cómo Funciona?</h1>
+        <div className="home-icons-container">
           {[
             {
               src: '/imgs/Busca-servicio.png',
@@ -102,25 +68,19 @@ function Home() {
               texto: 'Disfruta del servicio'
             },
           ].map((item, index) => (
-            <div key={index} style={{
-              width: '200px',
-              margin: '1rem'
-            }}>
-              <img src={item.src} alt={item.texto} style={{ width: '100%' }} />
-              <p style={{ marginTop: '0.5rem' }}>{item.texto}</p>
+            <div 
+              key={index} 
+              className="home-icon-box">
+              <img src={item.src} alt={item.texto}  />
+              <p className="home-icon-text">{item.texto}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <h1>Categorías destacadas</h1>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-          marginTop: '1.5rem'
-        }}>
+      <div className="home-section">
+        <h1 className="home-overlay-title">Categorías destacadas</h1>
+        <div className="home-icons-container">
           {[
             {
               src: '/imgs/Fontaneria.png',
@@ -143,11 +103,9 @@ function Home() {
               value: 'construccion y montaje'
             },
           ].map((item, index) => (
-            <div key={index}
-              style={{
-                width: '200px',
-                margin: '1rem'
-              }}>
+            <div 
+              className="home-icon-box" 
+              key={index}>
               <img
                 src={item.src}
                 alt={item.texto}
@@ -166,19 +124,10 @@ function Home() {
         </div>
       </div>
 
-      <div style={{
-        padding: '2rem',
-        textAlign: 'center'
-      }}>
-        <h1>¿Qué dicen nuestros clientes?</h1>
+      <div className="home-section">
+        <h1 className="home-overlay-title">¿Qué dicen nuestros clientes?</h1>
         {isLoad ?
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '1rem',
-            marginTop: '1.5rem'
-          }}>
+          <div className="home-comments-container">
             {comments.map((item, index) => (
               <div key={index} className="interaction-coment-item" >
                 <div className="interaction-coment-box">
