@@ -12,7 +12,7 @@ const Footer = () => {
             <p className="footer-text">contacto@empresa.com</p>
           </Col>
           <Col md={6} className="footer-social">
-            <p className="footer-title">Síguenos</p>
+            <p className="footer-title">Síguenos en redes</p>
             <div className="footer-icons">
               <Image src="/imgs/Logo-facebook.png" width={30} height={30} alt="Red 1" />
               <Image src="/imgs/Logo-instagram.png" width={30} height={30} alt="Red 2" />
