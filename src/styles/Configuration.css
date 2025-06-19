@@ -1,8 +1,19 @@
 .configuration-background {
   background-image: url('../imgs/Fondo-Configuration.webp');
   background-position: center;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: 4rem;
+  padding: 4rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .configuration-card,
+  .register-form {
+    max-width: 100%;
+  }
 }
