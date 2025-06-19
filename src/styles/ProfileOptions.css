@@ -14,3 +14,10 @@
     font-size: 2rem;
     padding-bottom: 1rem;
 }
+
+@media (max-width: 576px) {
+  .table-category,
+  .table-stars {
+    display: none;
+  }
+}

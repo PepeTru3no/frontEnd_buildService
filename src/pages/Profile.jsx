@@ -246,7 +246,18 @@ function Profile() {
                       required
                     />
                   </Form.Group>
-
+                  <Form.Group className="mb-3">
+                    <Form.Label>Precio de referencia</Form.Label>
+                    <Form.Control 
+                      type="textarea" 
+                      name="price" 
+                      placeholder="Precio"
+                      min="0"
+                      value="{formData.price}"
+                      onChange="{handleChange}"
+                      required
+                    />
+                  </Form.Group>
                   <Form.Group className="mb-3">
                     <Form.Label>Describe tu servicio.</Form.Label>
                     <Form.Control 

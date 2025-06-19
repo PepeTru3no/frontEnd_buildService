@@ -20,6 +20,7 @@ function Gallery({ title, text, image, buttonText, id, author, phone, stars, cat
           {icon}
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
+        <Card.Text><strong>Precio:</strong> 10.000 - 30.000 estatico</Card.Text>
         <Card.Text><strong>Autor:</strong> {author}</Card.Text>
         <Card.Text><strong>Telefono:</strong> {phone}</Card.Text>
         <Card.Text><strong>Descripción: </strong>{text}</Card.Text>
