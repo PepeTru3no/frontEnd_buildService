@@ -85,20 +85,20 @@ function Interaction() {
 
   return (
     <div className="interaction-background">
-      <div className="interaction-card" >
-        <Card>
+      <div >
+        <Card className="interaction-card" >
           <Card.Img className="interaction-img" variant="top" src={(usuario) ? `${ENDPOINT}/uploads/${usuario.image}` : "/imgs/Perfil.png"} />
           <Card.Body />
           <ListGroup className="list-group-flush">
             {usuario && token ?
               <>
-                <ListGroup.Item>{`${usuario.name} ${usuario.last_name}`}</ListGroup.Item>
-                <ListGroup.Item>{usuario.phone}</ListGroup.Item>
-                <ListGroup.Item>{usuario.email}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{`${usuario.name} ${usuario.last_name}`}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{usuario.phone}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{usuario.email}</ListGroup.Item>
               </>
               :
               <>
-                <ListGroup.Item className="interaction-text">Invitado</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">Invitado</ListGroup.Item>
               </>
             }
           </ListGroup>

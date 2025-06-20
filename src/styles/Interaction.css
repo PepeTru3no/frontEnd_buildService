@@ -15,7 +15,9 @@
 }
 
 .interaction-card {
-    width: 16rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 18rem;
+    color: white;
 }
 
 .interaction-img {
@@ -24,8 +26,11 @@
     object-fit: cover;
 }
 
-.interaction-text {
-    text-align: center;
+.interaction-item {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
 }
 
 .interaction-load {

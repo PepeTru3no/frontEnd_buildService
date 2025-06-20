@@ -106,14 +106,14 @@ function Configuration() {
   console.log(usuario);
   return (
     <div className="configuration-background">
-      <div className="interaction-card" >
-        <Card>
-          <Card.Img className="interaction-img" variant="top"
+      <div  >
+        <Card className="configuration-card">
+          <Card.Img className="configuration-img" variant="top"
             src={`${ENDPOINT}/uploads/${(usuario.image) ? usuario.image : ""}`} />
           <ListGroup className="list-group-flush">
-            <ListGroup.Item>{`${usuario.name || ""} ${usuario.last_name}`}</ListGroup.Item>
-            <ListGroup.Item>{usuario.phone || ""}</ListGroup.Item>
-            <ListGroup.Item>{usuario.email || ""}</ListGroup.Item>
+            <ListGroup.Item className="configuration-item">{`${usuario.name || ""} ${usuario.last_name}`}</ListGroup.Item>
+            <ListGroup.Item className="configuration-item">{usuario.phone || ""}</ListGroup.Item>
+            <ListGroup.Item className="configuration-item">{usuario.email || ""}</ListGroup.Item>
           </ListGroup>
         </Card>
       </div>

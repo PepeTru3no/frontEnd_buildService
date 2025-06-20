@@ -11,6 +11,25 @@
   flex-wrap: wrap;
 }
 
+.configuration-card {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 18rem;
+    color: white;
+}
+
+.configuration-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.configuration-item {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
 @media (max-width: 576px) {
   .configuration-card,
   .register-form {
