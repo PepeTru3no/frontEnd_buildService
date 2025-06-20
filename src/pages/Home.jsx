@@ -67,12 +67,17 @@ function Home() {
               src: '/imgs/Disfruta-servicio.png',
               texto: 'Disfruta del servicio'
             },
-          ].map((item, index) => (
-            <div 
-              key={index} 
-              className="home-icon-box">
+          ].map((item, index, array) => (
+            <div key={index} >
+            <div className="home-icon-group">
+            <div className="home-icon-box">
               <img src={item.src} alt={item.texto}  />
               <p className="home-icon-text">{item.texto}</p>
+            </div>
+                {index < array.length - 1 && (
+                <span className="home-arrow">→</span>
+              )}
+            </div>
             </div>
           ))}
         </div>
