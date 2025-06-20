@@ -149,7 +149,7 @@ function Interaction() {
                     value={service.stars}
                     size={15}
                     color2={'#ffd700'} edit={false} /></p>
-                  <p><strong>Precio:</strong> 10.000 - 30.000 estatico </p>
+                  <p><strong>Precios desde: $</strong> {service.price}.- </p>
                   <p className="interaction-describe">
                     {service.description}
                   </p>

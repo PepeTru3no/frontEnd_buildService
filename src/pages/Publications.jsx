@@ -17,25 +17,28 @@ function Publications() {
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState();
-  const [order, setOrder] = useState('id_ASC');
+  const [order, setOrder] = useState({
+    texto: 'inicial',
+    value: 'id_ASC'
+  });
   const { token } = useContext(TokenContext);
   const { usuario } = useContext(AuthContext);
   const [search, setSearch] = useState('');
-  const {categoria}=useParams();
+  const { categoria } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
     const us_id = usuario ? `&user_id=${usuario.id}` : '';
-    let cat="";
-    if(category && !categoria){
-      cat=`&category=${category}`;
-    }else if(!category && categoria){
-      cat=`&category=${categoria}`;
+    let cat = "";
+    if (category && !categoria) {
+      cat = `&category=${category}`;
+    } else if (!category && categoria) {
+      cat = `&category=${categoria}`;
       setCategory(categoria);
-    }else if(category && categoria){
+    } else if (category && categoria) {
       navigate('/publications');
     }
     const seek = search ? `&search=${search}` : "";
-    const queryParams = `?limit=${limit}&page=${page}&order=${order}${us_id}${cat}${seek}`;
+    const queryParams = `?limit=${limit}&page=${page}&order=${order.value}${us_id}${cat}${seek}`;
     axios
       .get(`${ENDPOINT}/services${queryParams}`)
       .then(({ data }) => {
@@ -74,6 +77,22 @@ function Publications() {
     {
       texto: 'Mejor calificados',
       value: 'stars_ASC'
+    },
+    {
+      texto: 'Recientes',
+      value: 'creation_ASC'
+    },
+    {
+      texto: 'Antiguos',
+      value: 'creation_DESC'
+    },
+    {
+      texto: 'Mayor precio',
+      value: 'price_ASC'
+    },
+    {
+      texto: 'Menor precio',
+      value: 'price_DESC'
     }
   ];
   const addFavorite = (service_id) => {
@@ -114,10 +133,11 @@ function Publications() {
     }
   };
 
-  const setParam=()=>{
+  const setParam = () => {
     setCategory('');
     navigate('/publications');
   }
+
   return (
     <div className="publications-background">
       <h1 className="publications-title">
@@ -161,14 +181,14 @@ function Publications() {
               id={`dropdown-split-variants-info`}
               variant='custom'
               title="Ordenado Por"
-              onSelect={(e) => setOrder(e)}
+              onSelect={(e) => {setOrder(orders[e])}}
               size='sm'
               className="publications-filters"
             >
               {orders.map((option, key) => (
                 <>
                   <Dropdown.Divider />
-                  <Dropdown.Item key={key} eventKey={option.value}>{option.texto}</Dropdown.Item>
+                  <Dropdown.Item key={key} eventKey={key}>{option.texto}</Dropdown.Item>
                 </>
               ))}
             </SplitButton>
@@ -198,14 +218,15 @@ function Publications() {
               <th className='publications-title-table'>Filtros:</th>
               {category ?
                 <th>
-                  <p className='publications-button'>&nbsp;{category}<CloseButton className="publications-close-button" onClick={() =>!categoria?setCategory(''):setParam()} /></p>
+                  <p className='publications-button'>&nbsp;{category}<CloseButton className="publications-close-button" onClick={() => !categoria ? setCategory('') : setParam()} /></p>
                 </th>
                 :
                 ''
               }
-              {order !== 'id_ASC' ?
+              {order.value !== 'id_ASC' ?
                 <th>
-                  <p className='publications-button'>&nbsp;Ordenado<CloseButton className="publications-close-button" onClick={() => setOrder('id_ASC')} /></p>
+                  <p className='publications-button'>&nbsp;{order.texto}<CloseButton className="publications-close-button" 
+                  onClick={() => setOrder({texto: 'inicial', value: 'id_ASC'})} /></p>
                 </th>
                 :
                 ''
@@ -243,6 +264,7 @@ function Publications() {
                     phone={servicio.user.phone}
                     stars={servicio.stars}
                     category={servicio.category}
+                    price={servicio.price}
                     icon={token ? servicio.isFav ?
                       <>
                         <BookmarkCheckFill size={18} onClick={() => deleteFavorite(servicio.id)} />
