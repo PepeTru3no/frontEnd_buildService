@@ -97,3 +97,53 @@
   color: white;
   padding-top: 1rem;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  gap: 0.5rem;
+}
+
+.pagination .page-item .page-link {
+  background-color: #0e2e3c; 
+  color: white;              
+  border: 1px solid #0e2e3c; 
+  border-radius: 0.3rem;
+  transition: background-color 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #14506d; 
+  border-color: #14506d;
+  color: white;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #14506d; 
+  border-color: #14506d;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #999999;            
+  pointer-events: none;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: none;
+  color: white;
+  padding: 1.5rem;
+}
+
+.modal-content p {
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin: 0;
+  text-align: center;
+}

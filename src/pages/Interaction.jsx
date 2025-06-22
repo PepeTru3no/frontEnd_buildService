@@ -10,6 +10,7 @@ import ReactStars from 'react-stars';
 import { ENDPOINT } from '../util/values';
 import '../styles/Interaction.css';
 import { Carousel } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 
 function Interaction() {
   const [comentario, setComentario] = useState('');
@@ -19,6 +20,8 @@ function Interaction() {
   const [stars, setStars] = useState();
   const [images, setImages] = useState();
   const { usuario } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const { id } = useParams();
   const token = sessionStorage.getItem('token');
   useEffect(() => {
@@ -74,7 +77,11 @@ function Interaction() {
     axios.put(`${ENDPOINT}/services/${id}`, data)
       .then(({ status, data }) => {
         if (status == 200) {
-          alert(`Gracias por calificar nuestro sercicio de :\n${service.name.toUpperCase()}`);
+          setModalMessage(`Gracias por calificar nuestro sercicio de :\n${service.name.toUpperCase()}`)
+          setShowModal(true);
+          setTimeout(()=> {
+            setShowModal(false);
+          }, 2000);
           setStars(data.stars);
         }
       })
@@ -113,8 +120,7 @@ function Interaction() {
             <div className="mb-4">
               <Form onSubmit={handleSubmit}>
                 <p className="interaction-title-describe">{service.name}</p>
-                <div className='interaction-carousel'>
-                <Carousel data-bs-theme="dark">
+                <Carousel data-bs-theme="dark" className="interaction-carousel" >
                   {images ?
                   images.map((image, key) => (
                   <Carousel.Item key={key}>
@@ -123,16 +129,12 @@ function Interaction() {
                       src={`${ENDPOINT}/uploads/${image.sample_image}`}
                       alt={image.sample_image}
                     />
-                    <Carousel.Caption>
-                      <h5>{service.name}</h5>
-                      <p>{service.description}</p>
-                    </Carousel.Caption>
                   </Carousel.Item>
                 ))
                   :
                   <Carousel.Item>
                     <img
-                      className="d-block w-100"
+                      className="interaction-carousel-img"
                       src="/imgs/Limpieza.png"
                       alt="Sin imagenes para el servicio"
                     />
@@ -143,13 +145,12 @@ function Interaction() {
                   </Carousel.Item>
                   }
                 </Carousel>
-                </div>
                   <p><ReactStars
                     count={5}
                     value={service.stars}
                     size={15}
                     color2={'#ffd700'} edit={false} /></p>
-                  <p><strong>Precios desde: $</strong> {service.price}.- </p>
+                    <p><strong>Precios desde: </strong>{new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', minimumFractionDigits: 0 }).format(service.price)}</p>
                   <p className="interaction-describe">
                     {service.description}
                   </p>
@@ -178,7 +179,7 @@ function Interaction() {
                   :
                   ""
                 }
-              </Form>
+                </Form>
             </div>
 
             {comentarios.length > 0 && (
@@ -204,6 +205,13 @@ function Interaction() {
             )}
           </div>
         }
+        {modalMessage && (
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Body className="text-center">
+              <p>{modalMessage}</p>
+            </Modal.Body>
+          </Modal>
+        )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { BookmarkPlus, BookmarkCheckFill } from 'react-bootstrap-icons';
 import { TokenContext } from "../context/TokenContext";
 import { AuthContext } from '../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
 
 function Publications() {
   const [servicios, setServicios] = useState();
@@ -26,6 +27,8 @@ function Publications() {
   const [search, setSearch] = useState('');
   const { categoria } = useParams();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   useEffect(() => {
     const us_id = usuario ? `&user_id=${usuario.id}` : '';
     let cat = "";
@@ -95,6 +98,17 @@ function Publications() {
       value: 'price_DESC'
     }
   ];
+
+  const showModalMessage = (msg) => {
+    setModalMessage(msg);
+    setShowModal(true);
+    setTimeout(()=> {
+      setShowModal(false);
+      setModalMessage("");
+    },2000);
+  };
+
+
   const addFavorite = (service_id) => {
     const data = {
       user_id: usuario.id,
@@ -103,7 +117,7 @@ function Publications() {
     axios.post(`${ENDPOINT}/favorites`, data)
       .then(({ data }) => {
         if (data) {
-          alert("Servicio agregado a favoritos");
+          showModalMessage("Servicio agregado a favoritos");
         }
         setIsLoad(false);
       })
@@ -117,7 +131,7 @@ function Publications() {
     axios.delete(`${ENDPOINT}/favorites${queryParams}`)
       .then(({ data }) => {
         if (data.message === 'eliminado') {
-          alert(`Servicio ${data.message} de favoritos`);
+          showModalMessage(`Servicio ${data.message} de favoritos`);
         }
         setIsLoad(false);
       })
@@ -264,7 +278,7 @@ function Publications() {
                     phone={servicio.user.phone}
                     stars={servicio.stars}
                     category={servicio.category}
-                    price={servicio.price}
+                    price={new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', minimumFractionDigits: 0 }).format(servicio.price)}
                     icon={token ? servicio.isFav ?
                       <>
                         <BookmarkCheckFill size={18} onClick={() => deleteFavorite(servicio.id)} />
@@ -281,7 +295,13 @@ function Publications() {
         </Container>
 
       }
-
+      {modalMessage && (
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Body className="text-center">
+              <p>{modalMessage}</p>
+            </Modal.Body>
+          </Modal>
+        )}
     </div>
   );
 }

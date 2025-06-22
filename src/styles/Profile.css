@@ -12,40 +12,40 @@
 }
 
 .profile-title {
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1rem;
-    width: 100%;
-    color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  color: white;
 }
 
 .profile-title-unauthorized {
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 5rem;
-    width: 100%;
-    color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 5rem;
+  width: 100%;
+  color: white;
 }
 
 .profile-welcome {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
-    color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: white;
 }
 
 .profile-form-container {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 2rem;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 100%;
 }
 
 .profile-form-container label{
-    color: white;
+  color: white;
 }
 
 .profile-header {
@@ -56,23 +56,23 @@
   margin-bottom: 1.5rem;
 }
 .profile-form-title {
-    color: white;
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
 }
 
 .profile-submit-button{
-    background-color:  #0e2e3c;
-    border: 1px solid #0e2e3c;
-    opacity: 1;
-    font-weight: bold;
+  background-color:  #0e2e3c;
+  border: 1px solid #0e2e3c;
+  opacity: 1;
+  font-weight: bold;
 }
 
 .profile-submit-button:hover {
-    background-color: #14506d;
-    border-color: #14506d;
-    transition: background-color 0.3s ease, ;
+  background-color: #14506d;
+  border-color: #14506d;
+  transition: background-color 0.3s ease, ;
 }
 
 .profile-content {
@@ -115,4 +115,20 @@
 
 .profile-filter.show * {
   background-color: #0e2e3c !important;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: none;
+  color: white;
+  padding: 1.5rem;
+}
+
+.modal-content p {
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin: 0;
+  text-align: center;
 }

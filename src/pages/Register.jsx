@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { ENDPOINT } from "../util/values";
 import '../styles/Register.css';
+import Modal from 'react-bootstrap/Modal';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,9 @@ function Register() {
     password: "",
     confirmarPassword: "",
   });
+
+  const [showModal, setShowModal] = useState(false);
+  const [menssage, setMenssage] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,20 +39,33 @@ function Register() {
       return;
     }
     axios.post(`${ENDPOINT}/users`,formData)
-    .then( (response) =>{
-      console.log(response);
-      navigate('/login');
+    .then( () =>{
+      setMenssage("Perfil creado con éxito");
+      setShowModal(true);
+      setTimeout(() =>{
+        setShowModal(false);
+        setMenssage("");
+        navigate('/login');
+      }, 2000);
     })
     .catch((error)=> {
       console.log(error);
     })
   };
+
   return (
     <div className="register-background">
       <div className="register-form">
         <h2 className="register-title">
           Registrarse
         </h2>
+        {menssage && (
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Body className="text-center">
+              <p>{menssage}</p>
+            </Modal.Body>
+          </Modal>
+        )}
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">

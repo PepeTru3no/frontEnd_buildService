@@ -36,3 +36,19 @@
     max-width: 100%;
   }
 }
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: none;
+  color: white;
+  padding: 1.5rem;
+}
+
+.modal-content p {
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin: 0;
+  text-align: center;
+}

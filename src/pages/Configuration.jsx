@@ -8,6 +8,8 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { ENDPOINT } from '../util/values';
 import { PencilFill } from 'react-bootstrap-icons';
+import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 function Configuration() {
   const { usuario, setUsuario } = useContext(AuthContext);
@@ -22,6 +24,10 @@ function Configuration() {
   });
   const [file, setFile] = useState([]);
   const [isEdit, setIsEdit] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
@@ -63,6 +69,13 @@ function Configuration() {
             image: usuario.image
           })
           setIsEdit(true);
+          setModalMessage("Perfil actualizado correctamente");
+          setShowModal(true);
+          setTimeout(()=>{
+            setShowModal(false);
+            setModalMessage("");
+            navigate('/configuration');
+        }, 2000);
         }
 
       })
@@ -224,6 +237,13 @@ function Configuration() {
           }
         </Form>
       </div>
+        {modalMessage && (
+          <Modal show={showModal} onHide={() => setShowModal(false)} centerd>
+            <Modal.Body className="tex-center">
+              <p>{modalMessage}</p>
+            </Modal.Body>
+          </Modal>
+        )}
     </div>
   )
 }
