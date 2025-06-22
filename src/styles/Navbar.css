@@ -1,23 +1,61 @@
-.button-nav{
-    background-color:  #0e2e3c !important;
-    border: 1px solid #0e2e3c !important;
-    color: white;
-    opacity: 1;
+.button-nav {
+  background-color: #0e2e3c !important;
+  border: 1px solid #0e2e3c !important;
+  color: white;
+  opacity: 1;
 }
 
 .button-nav:hover {
-    background-color: #14506d !important;
-    border-color: #14506d !important;
-    transition: background-color 0.3s ease, ;
+  background-color: #14506d !important;
+  border-color: #14506d !important;
+  transition: background-color 0.3s ease;
 }
 
 .brand-nav {
-    color: #0e2e3c;
+  color: #0e2e3c;
 }
 
 .logo-nav {
-    width: 70px;
-    height: 70px;
-    display: inline-block;
-    vertical-align: top;
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  vertical-align: top;
+}
+/* Estilo base */
+.hover-link {
+  color: #000; /* o el color que tienes por defecto */
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Estilo cuando pasas el mouse */
+.hover-link:hover {
+  color: #ffffff; /* Cambia el color del texto */
+  background-color: #007bff; /* Cambia el fondo al pasar el mouse */
+  border-radius: 5px;
+  padding: 4px 8px;
+}
+.notifications-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  width: 300px;
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notifications-list {
+  list-style: none;
+  padding-left: 0;
+  max-height: 250px;
+  overflow-y: auto;
 }

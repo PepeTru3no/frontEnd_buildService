@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Login from "../pages/Login";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { AuthContext } from "../context/Authcontext";
+import { AuthContext } from "../context/AuthContext";
 import { TokenContext } from "../context/TokenContext";
 import axios from "axios";
 
