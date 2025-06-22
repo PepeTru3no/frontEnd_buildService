@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { TokenContext } from "../context/TokenContext";
+import { ENDPOINT } from "../util/values";
 
 const Notifications = ({ onClose }) => {
   const { token } = useContext(TokenContext);
@@ -8,7 +9,7 @@ const Notifications = ({ onClose }) => {
 
   useEffect(() => {
     axios
-      .get("/notifications", {
+      .get(`${ENDPOINT}/notifications`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -19,7 +20,7 @@ const Notifications = ({ onClose }) => {
   const markAllAsRead = () => {
     axios
       .put(
-        "/notifications/read",
+        `${ENDPOINT}/notifications/read`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
