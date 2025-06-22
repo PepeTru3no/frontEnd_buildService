@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { TokenContext } from "../context/TokenContext";
-import Notifications from "./notifications"; // ⬅️ asegúrate de tener este componente
+import Notifications from "./Notifications"; // ⬅️ asegúrate de tener este componente
 import axios from "axios";
 import "../styles/Navbar.css";
+import { ENDPOINT } from "../util/values";
 
 function navbar() {
   const { token } = useContext(TokenContext);
@@ -14,7 +15,7 @@ function navbar() {
   useEffect(() => {
     if (token) {
       axios
-        .get("/notifications", {
+        .get(`${ENDPOINT}/notifications`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

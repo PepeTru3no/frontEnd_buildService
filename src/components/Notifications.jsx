@@ -13,6 +13,7 @@ const Notifications = ({ onClose }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        console.log(res)
         setNotifications(res.data);
       });
   }, [token]);
