@@ -9,12 +9,12 @@
 }
 
 .login-card {
-    background-color: white;
-    opacity: 0.9;
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 2rem;
     border-radius: 50px;
     max-width: 400px;
     width: 100%;
+    color: white;
 }
 
 .login-button{

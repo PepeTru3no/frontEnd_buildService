@@ -11,7 +11,8 @@ function Profile() {
   const { usuario } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: '',
-    description: ''
+    description: '',
+    price: 0
   });
   const [file, setFile] = useState([]);
   const [category, setCategory] = useState('Seleccione una Categoria');
@@ -58,7 +59,8 @@ function Profile() {
       name: formData.name,
       description: formData.description,
       user_id: usuario.id,
-      category: category.toLocaleLowerCase()
+      category: category.toLocaleLowerCase(),
+      price: formData.price
     }
     const Authorization = {
       headers: {
@@ -70,10 +72,13 @@ function Profile() {
         saveImage(data.id);
         setFormData({
           name: '',
-          description: ''
+          description: '',
+          price: 0
         })
         setFile([]);
         setCategory('Seleccione una Categoria');
+        alert("Servicio creado Correctamente");
+        setIsLoad(false);
       })
       .catch((error) => {
         console.log(error);
@@ -120,6 +125,7 @@ function Profile() {
     if (service.category) {
       setCategory(service.category);
     }
+    console.log(service);
     setFormData(service);
     setIsUpdate(true);
     alert("Formulario actualizado, ingrede sus cambios");
@@ -130,7 +136,8 @@ function Profile() {
       name: formData.name,
       description: formData.description,
       user_id: usuario.id,
-      category: category.toLocaleLowerCase()
+      category: category.toLocaleLowerCase(),
+      price: formData.price
     }
     const Authorization = {
       headers: {
@@ -202,114 +209,141 @@ function Profile() {
       <h1 className="profile-title">Perfil del Usuario</h1>
       {usuario && token ? (
         <>
-        <div className="profile-header">
-          <p className="profile-form-title">
-            Bienvenido,
-          </p>
-          <Button 
-            as={Link} to="/configuration" 
-            variant="primary"  
-            className="profile-submit-button"
-            title="Editar Perfil"> 
-            {usuario.name.toUpperCase()}
-          </Button>
-        </div>
+          <div className="profile-header">
+            <p className="profile-form-title">
+              Bienvenido,
+            </p>
+            <Button
+              as={Link} to="/configuration"
+              variant="primary"
+              className="profile-submit-button"
+              title="Editar Perfil">
+              {usuario.name.toUpperCase()}
+            </Button>
+          </div>
           {isLoad ? (
             <div className="profile-content">
-            <div className="profile-left-column">
-              <ProfileOptions 
-                nameAction={'Servicios'} 
-                services={services}
-                action={{ formUpdate, deleteService }} 
-              />
-              <ProfileOptions 
-                nameAction={'Favoritos'} 
-                services={favServices}
-                action={{ unFavorite }} 
-              />
+              <div className="profile-left-column">
+                <ProfileOptions
+                  nameAction={'Servicios'}
+                  services={services}
+                  action={{ formUpdate, deleteService }}
+                />
+                <ProfileOptions
+                  nameAction={'Favoritos'}
+                  services={favServices}
+                  action={{ unFavorite }}
+                />
+              </div>
+
+
+              <div className="profile-right">
+                <div className="profile-form-container">
+                  <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
+                  {token ?
+                    <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Nombre de su servicio</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          placeholder="Nombre del servicio"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Precio de referencia</Form.Label>
+                        <Form.Control
+                          type="textarea"
+                          name="price"
+                          placeholder="Precio"
+                          min="0"
+                          value={formData.price}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Describe tu servicio.</Form.Label>
+                        <Form.Control
+                          type="textarea"
+                          name="description"
+                          placeholder="Descripcion"
+                          value={formData.description}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3">
+                        <SplitButton
+                          key='Info'
+                          id={`dropdown-split-variants-info`}
+                          variant='custom'
+                          title={category}
+                          onSelect={handleSelect}
+                          className="profile-filter"
+                        >
+                          {categorys.map((option, key) => (
+                            <>
+                              <Dropdown.Divider />
+                              <Dropdown.Item key={key} eventKey={option.texto}>{option.texto}</Dropdown.Item>
+                            </>
+                          ))}
+                        </SplitButton>
+                      </Form.Group>
+
+                      <Form.Group className="mb-3">
+                        <Form.Label>imagenes de su servicio</Form.Label>
+                        {isUpdate ?
+                          <Form.Control
+                            type="file"
+                            name="file"
+                            placeholder="Agrege sus archivos"
+                            multiple
+                            onChange={handleFileChange} />
+                          :
+                          <Form.Control
+                            type="file"
+                            name="file"
+                            placeholder="Agrege sus archivos"
+                            multiple
+                            onChange={handleFileChange}
+                            required />
+                        }
+                      </Form.Group>
+                      <div className="d-flex justify-content-center">
+                        <Button
+                          className="profile-submit-button"
+                          type="submit">
+                          {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
+                        </Button>
+                        {isUpdate ?
+                          <Button
+                            className="profile-submit-button"
+                            onClick={()=>{
+                              alert("Edicion cancelada");
+                              setIsUpdate(false);
+                              setFormData({
+                                name: '',
+                                description: '',
+                                price: 0
+                              });
+                            }}>
+                            Cancelar edicion
+                          </Button>
+                          :
+                          ""
+                        }
+                      </div>
+                    </Form>
+
+                    :
+                    <h1>Para crear un servicio debes estar registrado</h1>}
+                </div>
+              </div>
             </div>
-            
-
-          <div className="profile-right">
-            <div className="profile-form-container">
-              <h2 className="text-center mb-4" style={{ color: "white" }}>Crear servicio</h2>
-              {token ?
-                <Form onSubmit={!isUpdate ? handleSubmit : updateService}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Nombre de su servicio</Form.Label>
-                    <Form.Control 
-                      type="text" 
-                      name="name" 
-                      placeholder="Nombre del servicio"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label>Describe tu servicio.</Form.Label>
-                    <Form.Control 
-                      type="textarea" 
-                      name="description" 
-                      placeholder="Descripcion"
-                      value={formData.description}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3">
-                    <SplitButton
-                      key='Info'
-                      id={`dropdown-split-variants-info`}
-                      variant='custom'
-                      title={category}
-                      onSelect={handleSelect}
-                      className="profile-filter"
-                    >
-                      {categorys.map((option, key) => (
-                        <>
-                          <Dropdown.Divider />
-                          <Dropdown.Item key={key} eventKey={option.texto}>{option.texto}</Dropdown.Item>
-                        </>
-                      ))}
-                    </SplitButton>
-                  </Form.Group>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label>imagenes de su servicio</Form.Label>
-                    {isUpdate ?
-                      <Form.Control 
-                        type="file" 
-                        name="file" 
-                        placeholder="Agrege sus archivos"
-                        multiple
-                        onChange={handleFileChange} />
-                      :
-                      <Form.Control 
-                        type="file" 
-                        name="file" 
-                        placeholder="Agrege sus archivos"
-                        multiple
-                        onChange={handleFileChange}
-                        value={file}
-                        required />
-                    }
-                  </Form.Group>
-                  <div className="d-flex justify-content-center">
-                    <Button 
-                      className="profile-submit-button" 
-                      type="submit">
-                      {isUpdate ? "Actualizar servicio" : "Grabar servicio"}
-                    </Button>
-                  </div>
-                </Form>
-
-                :
-                <h1>Para crear un servicio debes estar registrado</h1>}
-            </div>
-          </div>
-          </div>
           ) : (
             <h2 className="profile-title">Cargando tu contenido...</h2>
           )}

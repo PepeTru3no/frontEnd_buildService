@@ -1,18 +1,19 @@
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import '../styles/Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white pt-4 pb-2">
+    <footer className="footer">
       <Container fluid>
-        <Row className="px-5 justify-content-between align-items-start">
-          <Col md={3} className="text-start">
-            <p className="fw-bold mb-1">Contacto</p>
-            <p className="mb-1">+56 9 1234 5678</p>
-            <p className="mb-0">contacto@empresa.com</p>
+        <Row className="footer-row">
+          <Col md={6} className="footer-contact">
+            <p className="footer-title">Contacto</p>
+            <p className="footer-text">+56 9 1234 5678</p>
+            <p className="footer-text">contacto@empresa.com</p>
           </Col>
-          <Col md={3} className="text-end">
-            <p className="fw-bold mb-2">Síguenos</p>
-            <div className="d-flex justify-content-end gap-2">
+          <Col md={6} className="footer-social">
+            <p className="footer-title">Síguenos en redes</p>
+            <div className="footer-icons">
               <Image src="/imgs/Logo-facebook.png" width={30} height={30} alt="Red 1" />
               <Image src="/imgs/Logo-instagram.png" width={30} height={30} alt="Red 2" />
               <Image src="/imgs/Logo-linkedin.png" width={30} height={30} alt="Red 3" />
@@ -20,8 +21,8 @@ const Footer = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="text-center">
-            <p className="mb-0 small">© Todos los derechos reservados</p>
+          <Col className="footer-copy">
+            <p>© Todos los derechos reservados</p>
           </Col>
         </Row>
       </Container>

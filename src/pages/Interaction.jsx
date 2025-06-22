@@ -85,23 +85,22 @@ function Interaction() {
 
   return (
     <div className="interaction-background">
-      <div className="interaction-card" >
-        <Card>
+      <div >
+        <Card className="interaction-card" >
           <Card.Img className="interaction-img" variant="top" src={(usuario) ? `${ENDPOINT}/uploads/${usuario.image}` : "/imgs/Perfil.png"} />
           <Card.Body />
           <ListGroup className="list-group-flush">
             {usuario && token ?
               <>
-                <ListGroup.Item>{`${usuario.name} ${usuario.last_name}`}</ListGroup.Item>
-                <ListGroup.Item>{usuario.phone}</ListGroup.Item>
-                <ListGroup.Item>{usuario.email}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{`${usuario.name} ${usuario.last_name}`}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{usuario.phone}</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">{usuario.email}</ListGroup.Item>
               </>
               :
               <>
-                <ListGroup.Item className="interaction-text">Invitado</ListGroup.Item>
+                <ListGroup.Item className="interaction-item">Invitado</ListGroup.Item>
               </>
             }
-
           </ListGroup>
         </Card>
       </div>
@@ -109,49 +108,51 @@ function Interaction() {
         <div className="interaction-load">
           Cargando Servicio...
         </div>
-        :
-        <>
-          <Carousel data-bs-theme="dark">
-            {images ?
-              images.map((image, key) => (
-                <Carousel.Item key={key}>
-                  <img
-                    className="w-100"
-                    src={`${ENDPOINT}/uploads/${image.sample_image}`}
-                    alt={image.sample_image}
-                  />
-                  <Carousel.Caption>
-                    <h5>{service.name}</h5>
-                    <p>{service.description}</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              ))
-              :
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="/imgs/Limpieza.png"
-                  alt="Sin imagenes para el servicio"
-                />
-                <Carousel.Caption>
-                  <h5>Imagen de muestra</h5>
-                  <p>Aun no se han cargado imagenes para este servicio</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            }
-          </Carousel>
+        : 
           <div className="interaction-form">
             <div className="mb-4">
               <Form onSubmit={handleSubmit}>
                 <p className="interaction-title-describe">{service.name}</p>
-                <p><ReactStars
-                  count={5}
-                  value={service.stars}
-                  size={15}
-                  color2={'#ffd700'} edit={false} /></p>
-                <p className="interaction-describe">
-                  {service.description}
-                </p>
+                <div className='interaction-carousel'>
+                <Carousel data-bs-theme="dark">
+                  {images ?
+                  images.map((image, key) => (
+                  <Carousel.Item key={key}>
+                    <img
+                      className="interaction-carousel-img"
+                      src={`${ENDPOINT}/uploads/${image.sample_image}`}
+                      alt={image.sample_image}
+                    />
+                    <Carousel.Caption>
+                      <h5>{service.name}</h5>
+                      <p>{service.description}</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ))
+                  :
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src="/imgs/Limpieza.png"
+                      alt="Sin imagenes para el servicio"
+                    />
+                    <Carousel.Caption>
+                      <h5>Imagen de muestra</h5>
+                      <p>Aun no se han cargado imagenes para este servicio</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  }
+                </Carousel>
+                </div>
+                  <p><ReactStars
+                    count={5}
+                    value={service.stars}
+                    size={15}
+                    color2={'#ffd700'} edit={false} /></p>
+                  <p><strong>Precios desde: $</strong> {service.price}.- </p>
+                  <p className="interaction-describe">
+                    {service.description}
+                  </p>
                 {token && usuario ?
                   <>
                     <h5>Calificar Servicio:</h5>
@@ -202,7 +203,7 @@ function Interaction() {
               </div>
             )}
           </div>
-        </>}
+        }
     </div>
   );
 }

@@ -11,20 +11,20 @@ const ProfileOptions = ({ services, action, nameAction }) => {
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Servicio</th>
-                        <th>Categoria</th>
-                        <th>Estrellas</th>
-                        <th colSpan={2}>Acción</th>
+                        <th className="table-number">#</th>
+                        <th className="table-service">Servicio</th>
+                        <th className="table-category">Categoria</th>
+                        <th className="table-stars">Estrellas</th>
+                        <th className="table-action" colSpan={2}>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     {services.map((service, key) => (
                             <tr key={service.id || key}>
-                                <td>{key + 1}</td>
-                                <td>{service.name || ""}</td>
-                                <td>{service.category || ''}</td>
-                                <td className="profile-table-icon"> <ReactStars
+                                <td className="table-number">{key + 1}</td>
+                                <td className="table-service">{service.name || ""}</td>
+                                <td className="table-category">{service.category || ''}</td>
+                                <td className="table-stars"> <ReactStars
                                     count={5}
                                     value={service.stars}
                                     size={14}

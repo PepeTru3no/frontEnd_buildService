@@ -6,14 +6,18 @@
   background-position: center;
   min-height: 100vh;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
   align-items: flex-start;
   padding: 2rem 2rem 2rem;
   /* gap: 30rem; */
 }
 
 .interaction-card {
-    width: 16rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 18rem;
+    color: white;
 }
 
 .interaction-img {
@@ -22,8 +26,11 @@
     object-fit: cover;
 }
 
-.interaction-text {
-    text-align: center;
+.interaction-item {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
 }
 
 .interaction-load {
@@ -85,4 +92,20 @@
 .interaction-coment-text {
     font-weight: bold;
     font-size: 16px;
+}
+
+.interaction-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.interaction-carousel-img {
+    max-width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
 }
