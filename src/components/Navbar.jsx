@@ -143,7 +143,7 @@ function navbar() {
                   Servicios
                 </Nav.Link>
                 <Nav.Link as={Link} to="/logout">
-                  Logout
+                  Cerrar sesión
                 </Nav.Link>
               </div>
             </Nav>
