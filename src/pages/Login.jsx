@@ -32,7 +32,11 @@ function Login() {
 
     axios
       .post(`${ENDPOINT}/users/login`, formData)
-      .then(({ data }) => {
+      .then(({ data, status }) => {
+        if(status === 401){
+          alert("Primero debes verificar tu cuenta.");
+          return;
+        }
         let user =data.user;
         const image= data.image;
         user.image= image?image.sample_image :"";

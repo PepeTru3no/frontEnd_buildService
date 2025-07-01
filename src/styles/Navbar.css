@@ -30,7 +30,7 @@
 /* Estilo cuando pasas el mouse */
 .hover-link:hover {
   color: #ffffff; /* Cambia el color del texto */
-  background-color: #007bff; /* Cambia el fondo al pasar el mouse */
+  background-color: #14506d; /* Cambia el fondo al pasar el mouse */
   border-radius: 5px;
   padding: 4px 8px;
 }

@@ -40,7 +40,7 @@ function Register() {
     }
     axios.post(`${ENDPOINT}/users`,formData)
     .then( () =>{
-      setMenssage("Perfil creado con éxito");
+      setMenssage(`Perfil creado con éxito, se envio un correo de verificacion a ${formData.email}`);
       setShowModal(true);
       setTimeout(() =>{
         setShowModal(false);

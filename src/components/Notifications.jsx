@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { TokenContext } from "../context/TokenContext";
 import { ENDPOINT } from "../util/values";
+import '../styles/Notifications.css';
 
 const Notifications = ({ onClose }) => {
   const { token } = useContext(TokenContext);
@@ -36,8 +37,8 @@ const Notifications = ({ onClose }) => {
     <div className="notifications-dropdown">
       <div className="notifications-header">
         <strong>Notificaciones</strong>
-        <button onClick={markAllAsRead}>Marcar todas como leídas</button>
-        <button onClick={onClose}>Cerrar</button>
+        <button className="notifications-button" onClick={markAllAsRead}>Leer todo</button>
+        
       </div>
       <ul className="notifications-list">
         {notifications.map((n, i) => (
@@ -46,6 +47,9 @@ const Notifications = ({ onClose }) => {
           </li>
         ))}
       </ul>
+      <div className="notifications-actions">
+        <button className="notifications-button" onClick={onClose}>Cerrar notificaciones</button>
+      </div>
     </div>
   );
 };
